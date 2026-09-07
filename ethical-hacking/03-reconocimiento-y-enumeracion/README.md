@@ -2,13 +2,6 @@
 
 [Inicio](../../README.md) | [Ethical Hacking](../README.md) | [Laboratorio](./lab/)
 
-| Campo | Valor |
-|---|---|
-| Estado | Disponible |
-| Duración estimada | 3 a 4 horas |
-| Nivel | Inicial |
-| Modalidad | Lectura y laboratorio guiado |
-
 ## Objetivo
 
 Descubrir y enumerar una máquina Metasploitable 2 dentro de una red aislada, pasando de una red desconocida a un inventario verificable de servicios expuestos.

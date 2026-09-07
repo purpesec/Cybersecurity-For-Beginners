@@ -2,12 +2,6 @@
 
 [Inicio](../../../README.md) | [CyberSOC](../../README.md) | [Capítulo 02](../README.md)
 
-| Campo | Valor |
-|---|---|
-| Duración estimada | 4 a 6 horas |
-| Entorno | 2 VMs Ubuntu Server 22.04 LTS (Host-Only) |
-| Resultado | Pipeline de detección NIDS y correlación de Threat Intelligence (CDB) activo |
-
 > [!CAUTION]
 > Uso exclusivo en un entorno de laboratorio aislado. DVWA no debe publicarse en Internet.
 

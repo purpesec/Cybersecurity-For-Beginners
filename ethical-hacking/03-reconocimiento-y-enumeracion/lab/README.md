@@ -2,12 +2,6 @@
 
 [Inicio](../../../README.md) | [Ethical Hacking](../../README.md) | [Sesión 03](../README.md)
 
-| Campo | Valor |
-|---|---|
-| Duración estimada | 2 a 3 horas |
-| Entorno | Kali Linux y Metasploitable 2 |
-| Alcance | Enumeración sin explotación |
-
 > [!CAUTION]
 > Ejecuta estos comandos únicamente contra la VM Metasploitable 2 de tu laboratorio aislado.
 

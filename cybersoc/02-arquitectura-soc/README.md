@@ -2,14 +2,6 @@
 
 [Inicio](../../README.md) | [CyberSOC](../README.md) | [Laboratorio Completo](./lab/)
 
-| Campo | Valor |
-|---|---|
-| Estado | Disponible |
-| Duración estimada | 5 a 7 horas |
-| Nivel | Intermedio |
-| Modalidad | Lectura técnica y laboratorio práctico guiado (2 partes) |
-| Prerrequisitos | Fundamentos de Linux, redes TCP/IP, Docker y virtualización |
-
 ---
 
 ## Objetivo
