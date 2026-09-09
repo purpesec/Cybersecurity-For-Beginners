@@ -79,8 +79,6 @@ Los README de capítulos son documentos de **teoría con ejemplos y una Cheatshe
 
 [Inicio](../../README.md) | [Ruta](../README.md) | [Anterior: ...](../NN-tema/README.md) | [Siguiente: ...](../NN-tema/README.md)
 
-> **Nivel:** Inicial · **Duración:** 3 - 4 horas · **Prerrequisitos:** ...
-
 > [!CAUTION]
 > Nota de uso autorizado cuando el contenido sea ofensivo o manipulable.
 
@@ -147,6 +145,7 @@ No añadir estas secciones ni equivalentes:
 - Repaso y autoestudio.
 - Checklist de finalización.
 - Respuestas esperadas de evaluación.
+- Línea de metadatos (`Nivel`, `Duración`, `Prerrequisitos`) dentro del capítulo: esos datos viven en la tabla del índice de la ruta.
 
 Evitar preguntas dirigidas al lector. Convertirlas en afirmaciones o criterios técnicos. Los signos `?` son válidos dentro de URLs, query strings y ejemplos de protocolo.
 
