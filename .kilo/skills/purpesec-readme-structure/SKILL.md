@@ -111,7 +111,7 @@ Teoría, relaciones y ejemplo mínimo.
 
 ## Cheatsheet
 
-Resumen compacto de conceptos ya explicados.
+Referencia rápida del capítulo en formato PDF: [cheatsheet.pdf](./cheatsheet.pdf).
 
 ---
 
@@ -165,49 +165,42 @@ Evitar preguntas dirigidas al lector. Convertirlas en afirmaciones o criterios t
 
 La Cheatsheet es obligatoria en cada capítulo teórico y debe ser la última sección de contenido.
 
-Debe:
+Reglas:
 
-- Resumir únicamente contenido explicado en el capítulo.
-- Usar tablas, sintaxis compacta o fragmentos de protocolo.
-- Ser consultable sin convertirse en un segundo capítulo.
-- Mantener términos y ejemplos coherentes con el cuerpo del documento.
-- Evitar preguntas, ejercicios, instrucciones de entrega y checklists pedagógicos.
+- La sección existe siempre, pero la referencia rápida vive en un PDF externo, no en el README.
+- Escribir únicamente una frase breve y un enlace relativo al PDF del capítulo, con la convención `./cheatsheet.pdf`.
+- No escribir el contenido de la cheatsheet (tablas, sintaxis o resúmenes) directamente en el README.
+- No generar ni crear el PDF: lo mantiene el autor del curso.
+- El PDF es un artefacto local ignorado por Git; excluir `cheatsheet.pdf` de la validación de enlaces.
 
-Ejemplo mínimo:
+Formato exacto:
 
 ```markdown
 ## Cheatsheet
 
-| Concepto | Referencia rápida |
-|---|---|
-| Cliente | Toda entrada es manipulable. |
-| Backend | Autentica, autoriza, valida y procesa. |
-| TLS | Protege el transporte, no corrige la aplicación. |
+Referencia rápida del capítulo en formato PDF: [cheatsheet.pdf](./cheatsheet.pdf).
 ```
 
 ## Diagramas Mermaid
 
 ### Selección del tipo
 
-| Contenido | Tipo Mermaid |
+| Contenido | Tratamiento |
 |---|---|
-| Componentes y conexiones | `flowchart LR` |
-| Jerarquía o clasificación | `flowchart TD` |
-| Mensajes ordenados en el tiempo | `sequenceDiagram` |
-| Estados y transiciones | `stateDiagram-v2` |
-| Entidades y relaciones | `erDiagram` |
+| Flujo, arquitectura, proceso o secuencia | `flowchart LR` con pasos numerados cuando el orden importe. |
+| Jerarquía o clasificación corta | `flowchart LR` con ramas. |
+| Lista o taxonomía, como OWASP Top 10 | Tabla, no diagrama. |
 
 No usar un diagrama para listas que una tabla comunica mejor.
 
 ### Reglas de calidad
 
-- Mantener cada diagrama enfocado en una sola idea.
-- Preferir entre 3 y 9 nodos; dividir diagramas densos cuando pierdan legibilidad.
+- Todos los diagramas son horizontales: usar `flowchart LR` siempre.
+- No usar `TB`, `TD`, `BT`, `sequenceDiagram`, `stateDiagram-v2` ni `erDiagram` por defecto, porque Mermaid los renderiza en vertical. Emplearlos solo si el usuario lo pide expresamente.
+- Preferir una única línea de flujo principal de 3 a 6 nodos.
+- Evitar subgraphs, abanicos de más de 4 ramas y diagramas densos; si un diagrama crece, simplificarlo o sustituirlo por una tabla.
 - Usar nombres cortos y concretos.
-- Mantener una dirección de lectura consistente.
-- Mostrar respuestas o retornos cuando sean relevantes para el flujo.
-- Usar `sequenceDiagram` para DNS, TCP, TLS, autenticación y otras interacciones temporales.
-- Usar subgraphs solo cuando representen límites reales, como cliente y servidor.
+- Mostrar respuestas o retornos solo cuando el texto los explique.
 - No conectar componentes si la relación no se explica en el texto.
 - No añadir colores, `classDef`, temas personalizados ni directivas visuales por defecto; conservar el render sobrio de GitHub.
 - Evitar caracteres especiales ambiguos en etiquetas. Escribir `HTTP / HTTPS`, no `HTTP(S)` sin comillas.
@@ -313,10 +306,10 @@ Para capítulos teóricos, verificar:
 - Navegación válida.
 - Introducción seguida de teoría numerada.
 - Definiciones y ejemplos suficientes.
-- Una única sección `## Cheatsheet` al final.
+- Una única sección `## Cheatsheet` al final que enlace a `./cheatsheet.pdf` y no incluya la referencia inline.
 - Ausencia de objetivos, preguntas pedagógicas, cuestionarios, retos, autoestudio y entrega.
 - Ninguna imagen nueva.
-- Todos los diagramas en Mermaid.
+- Todos los diagramas en `flowchart LR` horizontal.
 - Todos los Mermaid renderizados sin errores.
 - Enlaces relativos existentes.
 - `git diff --check` sin incidencias.
