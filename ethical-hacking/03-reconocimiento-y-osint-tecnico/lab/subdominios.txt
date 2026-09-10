@@ -1,0 +1,12 @@
+www
+mail
+vpn
+dev
+staging
+portal
+admin
+test
+api
+blog
+shop
+backup

@@ -1,0 +1,35 @@
+# Banners ficticios de servicios
+
+> Todos los datos son sintéticos y se usan para practicar el análisis pasivo de servicios. No corresponden a sistemas reales.
+
+```text
+IP:         203.0.113.10
+Puerto:     22
+Producto:   OpenSSH 7.4
+Banner:     SSH-2.0-OpenSSH_7.4
+Observación: versión antigua con debilidades conocidas.
+```
+
+```text
+IP:         203.0.113.10
+Puerto:     80
+Producto:   Apache httpd 2.4.29
+Cabeceras:  Server: Apache/2.4.29 (Ubuntu)
+Observación: versión desactualizada y sistema operativo expuesto.
+```
+
+```text
+IP:         203.0.113.11
+Puerto:     3306
+Producto:   MySQL 5.5.62
+Banner:     Host 'x' is not allowed to connect
+Observación: base de datos expuesta a Internet; no debería ser accesible.
+```
+
+```text
+IP:         203.0.113.12
+Puerto:     3389
+Producto:   RDP
+Certificado: Common Name = staging.nebula.example
+Observación: escritorio remoto accesible con nombre interno filtrado.
+```
