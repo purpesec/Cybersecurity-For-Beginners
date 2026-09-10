@@ -11,9 +11,9 @@ Repositorio de formación en ciberseguridad con cinco cursos organizados por ses
 |---|---|---|---:|---|
 | 1 | [CyberSOC](./cybersoc/) | Fundamentos de riesgo, SIEM, IDS y Threat Intelligence con CDB | 2 sesiones | Disponible |
 | 2 | [Ethical Hacking](./ethical-hacking/) | Ética y metodología, ingeniería social, OSINT, reconocimiento, enumeración y explotación controlada | 5 sesiones | Disponible |
-| 3 | [Malware Analysis](./malware-analysis/) | Triage, análisis estático, formato PE y telemetría dinámica | 5 capítulos | Disponible |
+| 3 | [Malware Analysis](./malware-analysis/) | Triage, análisis estático, formato PE y telemetría dinámica | 5 sesiones con laboratorio | Disponible |
 | 4 | [Pentesting Web](./pentesting-web/) | Fundamentos web, HTTP, SQL Injection, Burp Suite y mitigaciones | 5 capítulos | Disponible |
-| 5 | [Privilege Escalation](./privilege-escalation/) | Escalada de privilegios en Linux y Windows | Planificado | En preparación |
+| 5 | [Privilege Escalation](./privilege-escalation/) | Enumeración local y escalada de privilegios en Linux | 7 capítulos | Disponible |
 
 `Disponible` indica que el módulo cuenta con guía y laboratorio completo. `En desarrollo` indica contenido en redacción progresiva.
 
