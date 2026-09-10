@@ -9,7 +9,7 @@ Repositorio de formación en ciberseguridad con cinco cursos organizados por ses
 
 | # | Ruta | Enfoque | Contenido disponible | Estado |
 |---|---|---|---:|---|
-| 1 | [CyberSOC](./cybersoc/) | SIEM, IDS, Threat Intelligence con CDB y correlación de IOCs | 1 módulo práctico (2 partes) | Disponible |
+| 1 | [CyberSOC](./cybersoc/) | Fundamentos de riesgo, SIEM, IDS y Threat Intelligence con CDB | 2 sesiones | Disponible |
 | 2 | [Ethical Hacking](./ethical-hacking/) | Reconocimiento y enumeración de infraestructura | 1 módulo | En desarrollo |
 | 3 | [Malware Analysis](./malware-analysis/) | Triage, análisis estático, formato PE y telemetría dinámica | 5 capítulos | Disponible |
 | 4 | [Pentesting Web](./pentesting-web/) | Fundamentos web, HTTP, SQL Injection, Burp Suite y mitigaciones | 5 capítulos | Disponible |

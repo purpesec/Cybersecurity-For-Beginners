@@ -1,6 +1,6 @@
-# Capítulo 02: Arquitectura SOC y Threat Intelligence con Wazuh CDB Lists
+# Sesión 02: Arquitectura SOC y Threat Intelligence con Wazuh CDB Lists
 
-[Inicio](../../README.md) | [CyberSOC](../README.md) | [Laboratorio Completo](./lab/)
+[Inicio](../../README.md) | [CyberSOC](../README.md) | [Anterior: Fundamentos de ciberseguridad y riesgo](../01-fundamentos-ciberseguridad-y-riesgo/README.md) | [Laboratorio Completo](./lab/)
 
 ---
 
@@ -102,4 +102,4 @@ La práctica está completa cuando puedes generar una petición HTTP controlada 
 
 ---
 
-[Volver a CyberSOC](../README.md) | [Abrir laboratorio](./lab/README.md) | [Inicio](../../README.md)
+[Anterior: Fundamentos de ciberseguridad y riesgo](../01-fundamentos-ciberseguridad-y-riesgo/README.md) | [Volver a CyberSOC](../README.md) | [Abrir laboratorio](./lab/README.md) | [Inicio](../../README.md)

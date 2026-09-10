@@ -1,0 +1,6 @@
+id_cliente,nombre,correo,telefono,numero_tarjeta,ciudad,fecha_alta
+1001,Cliente Demo 01,cliente01@example.com,555-0101,4111-1111-1111-1111,Madrid,2024-01-15
+1002,Cliente Demo 02,cliente02@example.com,555-0102,4111-2222-2222-2222,Sevilla,2024-02-03
+1003,Cliente Demo 03,cliente03@example.com,555-0103,4111-3333-3333-3333,Valencia,2024-03-21
+1004,Cliente Demo 04,cliente04@example.com,555-0104,4111-4444-4444-4444,Bilbao,2024-04-10
+1005,Cliente Demo 05,cliente05@example.com,555-0105,4111-5555-5555-5555,Zaragoza,2024-05-28
