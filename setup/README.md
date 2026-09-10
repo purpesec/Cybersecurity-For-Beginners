@@ -20,7 +20,7 @@ Esta guía define el entorno mínimo para ejecutar los materiales publicados. Lo
 | Ethical Hacking | Kali Linux + Metasploitable 2 | Kali: 2 vCPU, 4 GB RAM; objetivo: 1 vCPU, 1 GB RAM | Host-only |
 | Malware Analysis | VM Linux con GCC y binutils | 2 vCPU, 2 GB RAM | Sin red durante el analisis |
 | Pentesting Web | Debian, Ubuntu o Kali con Apache, MariaDB y PHP | 2 vCPU, 4 GB RAM | Host-only |
-| Privilege Escalation | Por definir | Por definir | Aislada |
+| Privilege Escalation | 1 VM Ubuntu Server 22.04 LTS | 2 vCPU, 4 GB RAM | Host-only |
 
 ## Configurar una red aislada
 
