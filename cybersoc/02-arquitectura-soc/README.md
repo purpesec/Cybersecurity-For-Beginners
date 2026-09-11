@@ -18,8 +18,8 @@ Al finalizar este capítulo podrás:
 - Explicar cómo Suricata inspecciona interfaces de red y transforma tráfico HTTP en eventos estructurados `eve.json`.
 - Configurar el módulo `localfile` del agente de Wazuh para la recolección e ingesta de logs en formato JSON.
 - Definir Requerimientos Prioritarios de Inteligencia (PIR) y modelar feeds de indicadores de compromiso (IOCs).
-- Crear, compilar y registrar listas **CDB (Constant Database)** en Wazuh Manager para búsquedas de alto rendimiento en memoria.
-- Diseñar reglas personalizadas de correlación XML para elevar severidades (Regla `100500` Nivel 12 para IOCs maliciosos y Regla `100501` Nivel 7 para sospechosos).
+- Crear y registrar una sola lista **CDB (Constant Database)** de IOC maliciosos simulados y comprobar su compilación automática.
+- Diseñar una única regla personalizada `100500` de nivel 12, encadenada a `86601`, que consulta `src_ip` con `address_match_key`.
 - Validar la lógica de decodificación y filtrado con `wazuh-logtest` antes de procesar eventos reales.
 - Investigar y filtrar alertas enriquecidas en **Wazuh Dashboard (Threat Hunting)**.
 
@@ -40,9 +40,9 @@ flowchart TD
     end
 
     subgraph Correlación con Threat Intelligence
-        TI["Threat Intelligence Feed\n(threat-intel-ip)"] -->|Compilación O(1)| CDB[("CDB List")]
+        TI["Threat Intelligence Feed\n(threat-intel-ip)"] -->|Compilación| CDB[("CDB List")]
         CDB -->|Lookup src_ip| WM
-        WM -->|Coincidencia ^malicious-| R12["Regla 100500\n(Level 12 - Crítica)"]
+        WM -->|86601 + IP presente| R12["Regla 100500\n(Level 12 - Alta prioridad)"]
         WM -->|Sin coincidencia| R3["Regla 86601\n(Level 3 - Informativa)"]
         R12 --> WI["Wazuh Indexer"]
         WI --> WD["Wazuh Dashboard\n(Threat Hunting)"]
@@ -50,8 +50,8 @@ flowchart TD
 ```
 
 ### De la detección a la inteligencia de amenazas
-1. **Detección Pura (Suricata)**: Identifica que un host (`172.30.0.20`) realizó una petición HTTP. Severidad baja/rutinaria (Level 3).
-2. **Enriquecimiento con Threat Intel (Wazuh CDB)**: La dirección IP de origen es contrastada instantáneamente contra la base de datos CDB. Al detectar que coincide con `malicious-PurpleWolf-C2-high`, el motor de correlación transforma un evento genérico en un incidente de **alta prioridad (Level 12)**, aportando contexto del adversario al analista.
+1. **Detección de red (Suricata)**: La firma `1000001` detecta una petición HTTP a `/login.php`. Wazuh reconoce ese evento mediante la regla integrada `86601`, de nivel 3 en esta práctica.
+2. **Correlación con Threat Intelligence (Wazuh CDB)**: Si el mismo evento cumple `86601` y `src_ip` está en `threat-intel-ip`, la regla custom `100500` genera una **alerta de alta prioridad (nivel 12)**. La etiqueta `PurpleWolf-C2-high` es contexto educativo: no determina la severidad ni se añade automáticamente a la alerta. Una coincidencia no demuestra un incidente ni una campaña real.
 
 ---
 
@@ -79,7 +79,7 @@ El laboratorio se divide en dos fases secuenciales complementarias:
 2. [**Parte 2: Threat Intelligence con Wazuh CDB Lists (Pasos 14 a 60)**](./lab/README.md#parte-2-threat-intelligence-con-wazuh-cdb-lists):
    - Definición del PIR y creación del feed de IOCs en `/var/ossec/etc/lists/threat-intel-ip`.
    - Permisos y registro de la lista en `wazuh_manager.conf`.
-   - Creación de reglas personalizadas `cybersoc_threat_intel.xml` (Regla 100500 de Nivel 12 y 100501 de Nivel 7).
+   - Creación de la única regla TI en `cybersoc_threat_intel.xml`: `100500`, nivel 12, padre `86601` y búsqueda IP `address_match_key`.
    - Validación de lógica con `wazuh-logtest` (Phase 2 Decoding y Phase 3 Rules).
    - Generación de eventos reales, inspección de `alerts.json` y análisis forense en Wazuh Dashboard.
 
@@ -90,7 +90,8 @@ El laboratorio se divide en dos fases secuenciales complementarias:
 - Estado de los servicios y contenedores en ambas VMs (`docker compose ps`, `agent_control -lc`).
 - Registro EVE JSON local con el SID `1000001`.
 - Compilación confirmada de la lista CDB (`threat-intel-ip.cdb`).
-- Prueba exitosa en `wazuh-logtest` mostrando el disparo de la regla `100500` a Nivel 12.
+- Prueba positiva en `wazuh-logtest` con `100500` / nivel 12 y control negativo con una IP ausente que conserva `86601` / nivel 3.
+- Evento nuevo `threatintel=...` presente en `eve.json` y su alerta `100500` / nivel 12 en `alerts.json`, con el mismo identificador; sin truncar el log.
 - Captura de la alerta enriquecida en **Wazuh Dashboard (Threat Hunting)** filtrando por `rule.id: 100500` y `data.src_ip: 172.30.0.20`.
 - Breve informe analítico explicando por qué un IOC Match no implica automáticamente un compromiso consumado y qué pasos de investigación deben seguirse.
 

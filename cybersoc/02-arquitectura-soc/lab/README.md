@@ -7,7 +7,7 @@
 
 ## Objetivo
 
-Desplegar el flujo completo de telemetría y detección: desde una petición web controlada a DVWA e inspección por Suricata NIDS, hasta el enriquecimiento de eventos mediante listas CDB de Threat Intelligence y priorización de alertas críticas en Wazuh Dashboard.
+Desplegar el flujo completo de telemetría y detección: desde una petición web controlada a DVWA e inspección por Suricata NIDS, hasta el enriquecimiento de eventos mediante listas CDB de Threat Intelligence y priorización de alertas de nivel 12 en Wazuh Dashboard.
 
 ## Arquitectura
 
@@ -572,6 +572,7 @@ Agregar antes del último `</ossec_config>`:
 
 ```bash
 sudo /var/ossec/bin/wazuh-agentd -t
+sudo /var/ossec/bin/wazuh-logcollector -t
 ```
 
 ### 11.3 Reiniciar el agente
@@ -668,9 +669,11 @@ data.alert.signature_id:1000001
 
 ---
 
-# Parte 2: Threat Intelligence con Wazuh CDB Lists
+## Parte 2: Threat Intelligence con Wazuh CDB Lists
 
-Continuación directa del laboratorio Wazuh + Suricata + DVWA.
+Continuación directa del laboratorio Wazuh + Suricata + DVWA, con Wazuh Docker **v4.14.7**. Los comandos se ejecutan en las terminales Bash de las VMs indicadas. Instala `jq` en VM 1 (`sudo apt install -y jq`); en VM 2 ya se instaló con Suricata.
+
+**No trunques ni borres `eve.json`**. Conserva el historial y distingue cada ejecución mediante URLs `threatintel=...` y su timestamp. Genera tráfico después de que el agente esté conectado.
 
 ## Arquitectura y Componentes de la Práctica
 
@@ -699,8 +702,8 @@ flowchart TD
 
     subgraph Enriquecimiento con Threat Intelligence
         TI["Fuente de Inteligencia de Amenazas"] -->|Lista key:value| CDB["CDB List\n(/var/ossec/etc/lists/threat-intel-ip)"]
-        CDB -->|address_match_key_value| WAZUH
-        WAZUH -->|IOC Match| CR["Custom Rules\n(Rule 100500 / 100501)"]
+        CDB -->|address_match_key| WAZUH
+        WAZUH -->|IOC Match| CR["Custom Rule\n(Rule 100500 / Level 12)"]
         CR -->|Alerta Priorizada Level 12| DASH["Wazuh Dashboard\n(Threat Hunting)"]
     end
 ```
@@ -722,10 +725,10 @@ El objetivo de esta segunda fase es transformar una alerta genérica en una **al
       ↓
 Threat Intelligence (CDB List)
       ↓
-malicious-PurpleWolf-C2-high  ──>  Rule 100500 (Level 12)
+PurpleWolf-C2-high  ──>  Rule 100500 (Level 12)
 ```
 
-Así el equipo del SOC no recibe simplemente un evento de severidad baja (Nivel 3), sino una alerta de alta prioridad (Nivel 12) con atribución a una campaña conocida.
+Así el equipo del SOC no recibe simplemente un evento de severidad baja (Nivel 3), sino una alerta de alta prioridad (Nivel 12) para investigar una coincidencia con un IOC del feed simulado. Esta coincidencia no atribuye por sí sola la actividad a una campaña real.
 
 ---
 
@@ -735,7 +738,7 @@ En operaciones de ciberseguridad, la ingesta de indicadores debe responder a un 
 
 > [!NOTE]
 > **PIR (Priority Intelligence Requirement)**:  
-> *¿Existe actividad de red asociada con indicadores previamente clasificados como maliciosos o sospechosos dentro del entorno CyberSOC?*
+> *¿Existe actividad de red asociada con indicadores previamente clasificados como maliciosos dentro del entorno CyberSOC?*
 
 El ciclo de inteligencia se materializa en el siguiente flujo técnico:
 
@@ -862,10 +865,12 @@ cd /opt/wazuh-docker/single-node
 sudo docker compose exec -T wazuh.manager sh -c "grep 'baseline=threatintel' /var/ossec/logs/alerts/alerts.json | tail -1"
 ```
 
-Observarás una alerta estándar con:
+En una instalación inicial, antes de añadir TI, el resultado esperado es una alerta estándar con:
 - `rule.id = 86601`
 - `rule.level = 3`
 - `data.src_ip = 172.30.0.20`
+
+Si estás actualizando un laboratorio que ya tiene TI cargada, puede aparecer la regla custom anterior en lugar de `86601`; aquí comprueba la llegada y el timestamp del evento. Después aplica la versión de los pasos siguientes.
 
 Con esto confirmamos la salud del pipeline base:
 $$\text{Suricata } \checkmark \quad \longrightarrow \quad \text{eve.json } \checkmark \quad \longrightarrow \quad \text{Wazuh Agent } \checkmark \quad \longrightarrow \quad \text{Wazuh Manager } \checkmark$$
@@ -874,20 +879,17 @@ $$\text{Suricata } \checkmark \quad \longrightarrow \quad \text{eve.json } \chec
 
 ## 22. Crear nuestro feed de Threat Intelligence
 
-Wazuh utiliza listas **CDB (Constant Database)** para búsquedas ultrarrápidas de tipo clave-valor ($O(1)$) en memoria.
+La CDB almacena pares `clave:valor`. En este laboratorio usamos **una sola lista de IOC maliciosos simulados**:
 
-Estructura de la lista:
 ```text
-key:value
-IP:clasificación-campaña-severidad
+172.30.0.20:PurpleWolf-C2-high
+198.51.100.25:DemoC2-high
+203.0.113.44:DemoPhishing-high
 ```
 
-Definimos los indicadores de nuestro feed educativo:
-- `172.30.0.20:malicious-PurpleWolf-C2-high` (El IOC real del atacante en el laboratorio; *PurpleWolf-C2* es una campaña simulada).
-- `198.51.100.25:malicious-DemoC2-high`
-- `203.0.113.44:malicious-DemoPhishing-high`
-- `192.0.2.15:suspicious-DemoScanner-medium`
-- `198.51.100.77:suspicious-DemoBot-medium`
+La clave es la IP; el valor es una etiqueta descriptiva para el alumno. `172.30.0.20` corresponde al atacante del laboratorio. Las otras IP son ejemplos de documentación; no necesitas generar tráfico hacia ellas.
+
+**La pertenencia a la lista activa la detección**. El texto `PurpleWolf-C2-high` no determina el nivel ni se incorpora automáticamente a la alerta: el nivel 12 está definido en la regla. Todas las campañas de este feed son ficticias.
 
 ---
 
@@ -899,11 +901,9 @@ En **VM 1**:
 cd /opt/wazuh-docker/single-node
 
 sudo docker compose exec -T wazuh.manager sh -c 'cat > /var/ossec/etc/lists/threat-intel-ip' <<'EOF'
-172.30.0.20:malicious-PurpleWolf-C2-high
-198.51.100.25:malicious-DemoC2-high
-203.0.113.44:malicious-DemoPhishing-high
-192.0.2.15:suspicious-DemoScanner-medium
-198.51.100.77:suspicious-DemoBot-medium
+172.30.0.20:PurpleWolf-C2-high
+198.51.100.25:DemoC2-high
+203.0.113.44:DemoPhishing-high
 EOF
 ```
 
@@ -951,71 +951,57 @@ Debe devolver: `WRITE OK`.
 
 ## 26. Registrar la CDB en la configuración de Wazuh
 
-La configuración persistente en despliegues con Docker reside en:
-`/opt/wazuh-docker/single-node/config/wazuh_cluster/wazuh_manager.conf`
+En **VM 1**, edita la configuración persistente del host, que Docker aplica al iniciar el Manager:
 
-1. Creamos una copia de seguridad preventiva:
-   ```bash
-   sudo cp config/wazuh_cluster/wazuh_manager.conf config/wazuh_cluster/wazuh_manager.conf.bak-threat-intel
-   ```
+```bash
+cd /opt/wazuh-docker/single-node
+sudo cp -p config/wazuh_cluster/wazuh_manager.conf "config/wazuh_cluster/wazuh_manager.conf.bak-threat-intel-$(date +%s)"
+sudo nano config/wazuh_cluster/wazuh_manager.conf
+```
 
-2. Registramos la lista dentro del bloque `<ruleset>`:
-   ```bash
-   sudo python3 - <<'PY'
-   from pathlib import Path
+Dentro del bloque `<ruleset>` existente, deja **una sola entrada TI de este laboratorio**:
 
-   p = Path("/opt/wazuh-docker/single-node/config/wazuh_cluster/wazuh_manager.conf")
-   text = p.read_text()
-   entry = "    <list>etc/lists/threat-intel-ip</list>"
+```xml
+<list>etc/lists/threat-intel-ip</list>
+```
 
-   if "etc/lists/threat-intel-ip" in text:
-       print("La CDB ya está registrada.")
-       raise SystemExit(0)
-
-   start = text.find("<ruleset>")
-   end = text.find("</ruleset>", start)
-
-   if start == -1 or end == -1:
-       raise SystemExit("ERROR: no se encontró el bloque <ruleset>.")
-
-   text = text[:end] + entry + "\n  " + text[end:]
-   p.write_text(text)
-   print("CDB registrada correctamente.")
-   PY
-   ```
-
----
+Si ejecutaste una variante anterior, retira las entradas de las listas TI alternativas del laboratorio. Conserva las listas integradas de Wazuh y cualquier configuración ajena a esta práctica. No crees un segundo bloque `<ruleset>`.
 
 ## 27. Verificar el registro en la configuración
 
 ```bash
-grep -n -B5 -A5 "threat-intel-ip" config/wazuh_cluster/wazuh_manager.conf
+grep -n -B5 -A5 "threat-intel-" config/wazuh_cluster/wazuh_manager.conf
 ```
 
-Confirmamos que `<list>etc/lists/threat-intel-ip</list>` esté presente dentro de `<ruleset>` en una sola línea.
+Comprueba que `<list>etc/lists/threat-intel-ip</list>` aparece una sola vez, dentro de `<ruleset>`. El archivo de texto de esta lista se reemplazó con los tres IOC del paso 23; una lista no registrada ni referenciada por reglas no participa en la detección.
 
 ---
 
-## 28. Crear las reglas personalizadas de Threat Intelligence
+## 28. Crear la única regla personalizada de Threat Intelligence
 
-Crearemos un archivo independiente `/var/ossec/etc/rules/cybersoc_threat_intel.xml`:
+Reemplaza el archivo del laboratorio `/var/ossec/etc/rules/cybersoc_threat_intel.xml` completo con esta única regla. Si ya ejecutaste la versión anterior, guarda antes una copia fuera del directorio de reglas:
+
+```bash
+sudo docker compose exec -u 0 -T wazuh.manager sh -c '
+if [ -f /var/ossec/etc/rules/cybersoc_threat_intel.xml ]; then
+  cp -p /var/ossec/etc/rules/cybersoc_threat_intel.xml /var/ossec/etc/cybersoc_threat_intel.xml.bak-$(date +%s)
+fi
+'
+```
+
+Si copiaste las reglas TI del laboratorio a otro archivo, retira esas copias antes de cargar esta versión; conserva las reglas de otras prácticas. Las copias de seguridad deben permanecer fuera de `/var/ossec/etc/rules/`.
+
+Contenido definitivo:
 
 ```bash
 sudo docker compose exec -T wazuh.manager sh -c 'cat > /var/ossec/etc/rules/cybersoc_threat_intel.xml' <<'EOF'
-<group name="threat_intelligence,suricata,">
+<group name="threat_intelligence,">
 
   <rule id="100500" level="12">
-    <if_group>suricata</if_group>
-    <list field="src_ip" lookup="address_match_key_value" check_value="^malicious-">etc/lists/threat-intel-ip</list>
-    <description>CYBERSOC - High risk Threat Intelligence IOC detected</description>
+    <if_sid>86601</if_sid>
+    <list field="src_ip" lookup="address_match_key">etc/lists/threat-intel-ip</list>
+    <description>CYBERSOC - Threat Intelligence IOC detected</description>
     <group>threat_intelligence,malicious_ioc,</group>
-  </rule>
-
-  <rule id="100501" level="7">
-    <if_group>suricata</if_group>
-    <list field="src_ip" lookup="address_match_key_value" check_value="^suspicious-">etc/lists/threat-intel-ip</list>
-    <description>CYBERSOC - Suspicious Threat Intelligence IOC detected</description>
-    <group>threat_intelligence,suspicious_ioc,</group>
   </rule>
 
 </group>
@@ -1024,26 +1010,30 @@ EOF
 
 ---
 
-## 29. Desglose de la Regla 100500 (IOC Malicioso - Nivel 12)
+## 29. Qué hace la regla 100500
 
-- `<if_group>suricata</if_group>`: Exige que el evento provenga de una regla de Suricata previa.
-- `<list field="src_ip" lookup="address_match_key_value" check_value="^malicious-">etc/lists/threat-intel-ip</list>`:
-  1. Extrae el valor del campo `src_ip`.
-  2. Lo busca como clave en la base de datos CDB compilada.
-  3. Recupera el valor asociado.
-  4. Evalúa si el valor comienza con el prefijo regex `^malicious-`.
-  5. Si coincide (`172.30.0.20` $\rightarrow$ `malicious-PurpleWolf-C2-high`), dispara la regla **100500** elevando la severidad a **Level 12**.
+| Elemento | Función |
+|---|---|
+| `id="100500"` | Identifica la regla personalizada de este laboratorio. |
+| `level="12"` | Fija la severidad alta de la alerta cuando se cumplen las condiciones. |
+| `<if_sid>86601</if_sid>` | Exige que el mismo evento haya coincidido con la regla integrada de alertas Suricata. No es una correlación temporal entre dos eventos. |
+| `field="src_ip"` | Consulta la IP de origen que extrajo el decodificador JSON. |
+| `lookup="address_match_key"` | Busca esa dirección IP entre las claves de la CDB. |
+| `etc/lists/threat-intel-ip` | Ruta de la única lista TI, relativa a `/var/ossec` y sin extensión `.cdb`. |
+| `description` | Define el mensaje visible en la alerta. |
+| `group` | Añade categorías para buscar y agrupar las alertas. |
 
----
+En lenguaje humano: **si el evento coincide con 86601 y su IP origen está en la CDB, genera la alerta 100500 de nivel 12**. La CDB aporta los indicadores; la regla decide qué hacer con la coincidencia.
 
-## 30. Desglose de la Regla 100501 (IOC Sospechoso - Nivel 7)
+## 30. Resultado con y sin coincidencia
 
-Evalúa si el valor asociado al indicador coincide con el prefijo `^suspicious-` (ej. `192.0.2.15` $\rightarrow$ `suspicious-DemoScanner-medium`), disparando una alerta de severidad media (**Level 7**).
+| Evento de prueba | Resultado esperado |
+|---|---|
+| Alerta Suricata con `src_ip=172.30.0.20`, incluida en la CDB | `100500`, nivel `12` |
+| Misma alerta con `src_ip=192.0.2.15`, ausente de la CDB | Regla base `86601`, nivel `3` |
+| Evento que no cumple la regla padre `86601` | No activa esta regla TI aunque contenga una IP listada |
 
-| Prefijo de Clasificación | Regla ID | Nivel de Severidad | Significado Operativo |
-|---|---|---|---|
-| `malicious-*` | **100500** | **12** (Crítica) | Actividad confirmada de C2, ransomware o phishing activo. |
-| `suspicious-*` | **100501** | **7** (Media) | Escaneos de reconocimiento, proxies anónimos o bots no clasificados. |
+`1000001` es el SID de la firma de Suricata; `86601` es la regla integrada de Wazuh; `100500` es nuestra regla custom. Son identificadores de funciones distintas.
 
 ---
 
@@ -1149,7 +1139,22 @@ cd /opt/wazuh-docker/single-node
 sudo docker compose exec -T wazuh.manager /var/ossec/bin/agent_control -lc
 ```
 
-El agente `cyberrange-suricata` debe figurar en estado **Active**.
+El agente `cyberrange-suricata` debe figurar en estado **Active**. Su ID puede variar. Si solo aparece `000 / Active/Local`, todavía no está conectado: no avances a la prueba TI.
+
+En VM 1, lista también los agentes desconectados:
+
+```bash
+sudo docker compose exec -T wazuh.manager /var/ossec/bin/agent_control -l
+```
+
+En VM 2, revisa el transporte y la recolección:
+
+```bash
+sudo grep -Ei 'connected|unable|error|auth|eve.json|logcollector' /var/ossec/logs/ossec.log | tail -30
+sudo /var/ossec/bin/wazuh-logcollector -t
+```
+
+Corrige la conectividad o el registro según esos errores y vuelve a verificar `Active`. El estado local `active (running)` del servicio no basta para demostrar la conexión al Manager.
 
 ---
 
@@ -1171,7 +1176,7 @@ sleep 2
 sudo jq -c 'select(
     .event_type=="alert"
     and .alert.signature_id==1000001
-    and (.http.url | contains("threatintel=ti-test"))
+    and ((.http.url // "") | contains("threatintel=ti-test"))
 )' /var/log/suricata/eve.json | tail -1
 ```
 
@@ -1196,7 +1201,7 @@ sleep 3
 sudo jq -c 'select(
     .event_type=="alert"
     and .alert.signature_id==1000001
-    and (.http.url | contains("threatintel=ti-"))
+    and ((.http.url // "") | contains("threatintel=ti-"))
 )' /var/log/suricata/eve.json | tail -5
 ```
 
@@ -1208,7 +1213,7 @@ sudo jq -c 'select(
 sudo jq -c 'select(
     .event_type=="alert"
     and .alert.signature_id==1000001
-    and (.http.url | contains("threatintel=ti-"))
+    and ((.http.url // "") | contains("threatintel=ti-"))
 )' /var/log/suricata/eve.json | tail -1 | jq '{
     timestamp,
     src_ip,
@@ -1232,7 +1237,7 @@ Extrae una línea JSON completa:
 sudo jq -c 'select(
     .event_type=="alert"
     and .alert.signature_id==1000001
-    and (.http.url | contains("threatintel=ti-"))
+    and ((.http.url // "") | contains("threatintel=ti-"))
 )' /var/log/suricata/eve.json | tail -1
 ```
 
@@ -1271,82 +1276,107 @@ Dado que el decodificador genera la variable dinámica `src_ip`, nuestra regla X
 **Phase 3: Completed filtering (rules).
    id: '100500'
    level: '12'
-   description: 'CYBERSOC - High risk Threat Intelligence IOC detected'
-   groups: '["threat_intelligence", "malicious_ioc"]'
+   description: 'CYBERSOC - Threat Intelligence IOC detected'
 ```
 
-La lógica ha funcionado: `172.30.0.20` fue localizada en la CDB, devolvió `malicious-PurpleWolf-C2-high`, coincidió con el prefijo `^malicious-` y disparó la regla **100500** elevándola a **Nivel 12**.
+El resultado esperado confirma que el evento cumplió `86601` y que `172.30.0.20` existe como clave en la CDB. La regla **100500** fija el **nivel 12**. Phase 3 muestra la regla final; no necesitas ver primero una salida separada de `86601`.
+
+**`wazuh-logtest` prueba el decodificador y las reglas; no envía el evento por el agente ni escribe una alerta real en `alerts.json`.** La comprobación del transporte se realiza con tráfico nuevo en los pasos siguientes.
 
 Sal de `wazuh-logtest` presionando `Ctrl + C`.
 
 ---
 
-## 48. Generar eventos REALES para el pipeline completo
+## 48. Generar eventos REALES para el flujo completo
 
-Una vez validada la lógica, generamos eventos de tráfico real que recorran toda la infraestructura:
-
-En **VM 2**:
+Después de validar `100500` con `wazuh-logtest` y confirmar el agente `Active`, genera tráfico nuevo en **VM 2**:
 
 ```bash
 cd /opt/cybersoc-lab
+TI_RUN="real-$(date -u +%Y%m%dT%H%M%S)-$$"
+printf 'Identificador de esta ejecución: %s\n' "$TI_RUN"
 for i in 1 2 3 4 5; do
-  sudo docker compose exec -T attacker curl -s "http://dvwa/login.php?threatintel=real-$i" >/dev/null
+  sudo docker compose exec -T attacker \
+    curl -sS "http://dvwa/login.php?threatintel=$TI_RUN-$i" >/dev/null
 done
 sleep 5
 ```
 
----
+Conserva el identificador impreso. Usa el mismo valor en VM 1. Si repites la prueba, genera otro identificador; no vacíes `eve.json`.
 
 ## 49. Verificar Suricata
 
+En la misma terminal de **VM 2**:
+
 ```bash
-sudo jq -c 'select(
+sudo jq -c --arg marker "threatintel=$TI_RUN-" 'select(
     .event_type=="alert"
     and .alert.signature_id==1000001
-    and (.http.url | contains("threatintel=real-"))
+    and ((.http.url // "") | contains($marker))
 )' /var/log/suricata/eve.json | tail -5
 ```
 
----
+Deben aparecer eventos recientes de esta ejecución con `src_ip=172.30.0.20` y `dest_ip=172.30.0.10`. Si no aparecen, revisa Suricata y la generación de tráfico antes de buscar en Wazuh.
 
 ## 50. Verificar la llegada al Manager
 
-En **VM 1**:
+En **VM 1**, introduce el valor de `TI_RUN` impreso en VM 2 cuando se solicite:
 
 ```bash
 cd /opt/wazuh-docker/single-node
-sudo docker compose exec -T wazuh.manager sh -c "grep 'threatintel=real-' /var/ossec/logs/alerts/alerts.json | tail"
+read -r -p "Pega el identificador TI_RUN de VM 2: " TI_RUN
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json \
+  | jq -c --arg marker "threatintel=$TI_RUN-" 'select(
+      .agent.name=="cyberrange-suricata"
+      and ((.data.http.url // "") | contains($marker))
+    )' | tail -5
 ```
 
----
+Primero buscamos por agente y URL, independientemente de la regla. Si solo ves `86601` para esos eventos, el transporte funciona pero la correlación TI requiere revisión. Si ves `100500`, esa es la regla final: no se requiere una segunda alerta independiente `86601` para el mismo evento.
 
-## 51. Verificar el disparo de la Regla 100500
+Si Suricata tiene el marcador nuevo pero el Manager no, vuelve al estado del agente y la recolección del paso 38. Revisa timestamps y espera la recepción antes de repetir la consulta; una alerta de otra ejecución no sirve como evidencia.
+
+## 51. Verificar el disparo de la regla 100500
+
+En la misma terminal de **VM 1**, conserva `TI_RUN`:
 
 ```bash
-sudo docker compose exec -T wazuh.manager sh -c "grep '\"id\":\"100500\"' /var/ossec/logs/alerts/alerts.json | tail"
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json \
+  | jq -c --arg marker "threatintel=$TI_RUN-" 'select(
+      .agent.name=="cyberrange-suricata"
+      and ((.data.http.url // "") | contains($marker))
+      and .rule.id=="100500"
+      and .rule.level==12
+    )' | tail -5
 ```
 
-O filtrando por su descripción:
+El resultado esperado es la alerta TI de **esta ejecución**. Una salida vacía todavía no confirma el éxito: comprueba la lista efectiva, los permisos, la regla cargada y `wazuh-analysisd -t`.
+
+## 52. Inspeccionar la última alerta de esta ejecución
 
 ```bash
-sudo docker compose exec -T wazuh.manager sh -c "grep 'High risk Threat Intelligence IOC' /var/ossec/logs/alerts/alerts.json | tail"
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json \
+  | jq -c --arg marker "threatintel=$TI_RUN-" 'select(
+      .agent.name=="cyberrange-suricata"
+      and ((.data.http.url // "") | contains($marker))
+      and .rule.id=="100500"
+      and .rule.level==12
+    )' | tail -1 | jq .
 ```
 
----
+Comprueba:
 
-## 52. Inspeccionar la alerta enriquecida completa
-
-```bash
-sudo docker compose exec -T wazuh.manager sh -c "grep '\"id\":\"100500\"' /var/ossec/logs/alerts/alerts.json | tail -1" | jq .
-```
-
-Campos confirmados:
-- `rule.id`: `100500`
-- `rule.level`: `12`
-- `rule.description`: `CYBERSOC - High risk Threat Intelligence IOC detected`
-- `agent.name`: `cyberrange-suricata`
-- `data.src_ip`: `172.30.0.20`
-- `data.alert.signature_id`: `1000001`
+- `rule.id`: `100500`.
+- `rule.level`: `12`.
+- `rule.description`: `CYBERSOC - Threat Intelligence IOC detected`.
+- `agent.name`: `cyberrange-suricata`.
+- `data.src_ip`: `172.30.0.20`.
+- `data.alert.signature_id`: `1000001`.
+- `data.http.url`: contiene el identificador `threatintel=$TI_RUN-` con su valor real.
+- `timestamp`: corresponde a la ejecución recién realizada.
 
 ---
 
@@ -1374,7 +1404,8 @@ flowchart LR
    ```text
    Threat Intelligence  ──>  Threat Hunting
    ```
-3. Aplica los siguientes filtros de búsqueda:
+3. Ajusta el intervalo de tiempo a la ejecución reciente y comprueba `data.http.url` con el marcador utilizado.
+4. Aplica los siguientes filtros de búsqueda:
    - `rule.id: 100500`
    - `rule.groups: threat_intelligence`
    - `data.src_ip: 172.30.0.20`
@@ -1386,39 +1417,39 @@ flowchart LR
 | Dimensión | Detección Base (Suricata) | Enriquecimiento Threat Intelligence (Wazuh CDB) |
 |---|---|---|
 | **Regla disparada** | `86601` | **`100500`** |
-| **Nivel de severidad** | `3` (Baja) | **`12` (Crítica / Alta prioridad)** |
-| **Descripción** | `Suricata: Alert - CYBERSOC - Acceso HTTP a DVWA` | `CYBERSOC - High risk Threat Intelligence IOC detected` |
-| **Contexto disponible** | Simple tráfico HTTP hacia el puerto 80 | **Origen identificado como C2 hostil (`PurpleWolf-C2`)** |
-| **Acción requerida** | Monitoreo rutinario | **Respuesta a incidentes y contención inmediata** |
+| **Nivel de severidad** | `3` (Baja) | **`12` (Alta prioridad)** |
+| **Descripción** | `Suricata: Alert - CYBERSOC - Acceso HTTP a DVWA` | `CYBERSOC - Threat Intelligence IOC detected` |
+| **Contexto disponible** | Simple tráfico HTTP hacia el puerto 80 | IP presente en el feed educativo de IOC maliciosos |
+| **Acción requerida** | Monitoreo rutinario | Priorizar investigación y contrastar otras evidencias |
 
 > [!IMPORTANT]
 > El tráfico de red no cambió. Lo que cambió fue el **contexto previo, la inteligencia de amenazas y la correlación**.
 
 ---
 
-## 56. Probar la clasificación de indicadores sospechosos (`suspicious`)
+## 56. Control negativo: una IP ausente de la lista
 
-Podemos validar la regla **100501** mediante `wazuh-logtest` sin alterar la topología de red:
-
-En **VM 1**:
+En **VM 1**, abre una sesión nueva:
 
 ```bash
 sudo docker compose exec -it wazuh.manager /var/ossec/bin/wazuh-logtest
 ```
 
-Pega el siguiente evento simulado que utiliza la IP `192.0.2.15`:
+Pega este evento simulado en una sola línea. `192.0.2.15` no pertenece al feed definido en el paso 22:
 
 ```json
-{"timestamp":"2026-09-05T12:00:00.000000+0000","event_type":"alert","src_ip":"192.0.2.15","src_port":44444,"dest_ip":"172.30.0.10","dest_port":80,"proto":"TCP","alert":{"action":"allowed","gid":1,"signature_id":1000001,"rev":1,"signature":"CYBERSOC - Acceso HTTP a DVWA","category":"","severity":3}}
+{"timestamp":"2026-09-11T12:00:00.000000+0000","event_type":"alert","src_ip":"192.0.2.15","src_port":44444,"dest_ip":"172.30.0.10","dest_port":80,"proto":"TCP","alert":{"action":"allowed","gid":1,"signature_id":1000001,"rev":1,"signature":"CYBERSOC - Acceso HTTP a DVWA","category":"","severity":3}}
 ```
 
-**Resultado obtenido**:
+**Resultado esperado** en este laboratorio:
+
 ```text
-**Phase 3: Completed filtering (rules).
-   id: '100501'
-   level: '7'
-   description: 'CYBERSOC - Suspicious Threat Intelligence IOC detected'
+id: '86601'
+level: '3'
+description: 'Suricata: Alert - CYBERSOC - Acceso HTTP a DVWA'
 ```
+
+Esto comprueba que una alerta de Suricata sin coincidencia en la CDB conserva la detección base. Sal con `Ctrl+C`.
 
 ---
 
@@ -1450,7 +1481,7 @@ A pesar de obtener una coincidencia de IOC y una alerta de Nivel 12:
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-La correlación confirma que un actor o dirección maliciosa intentó comunicarse con nuestro servidor. La función del analista SOC no es declarar la brecha de inmediato, sino **priorizar la investigación, aislar el activo y buscar telemetría complementaria** (análisis de logs en host, procesos hijos y persistencia).
+La correlación confirma que la IP observada aparece en nuestra lista. En esta práctica el tráfico HTTP y la campaña son simulados. El analista debe **priorizar la investigación y buscar telemetría complementaria** antes de concluir que existe un compromiso o decidir medidas de contención.
 
 ---
 
@@ -1473,10 +1504,10 @@ sequenceDiagram
     Agent->>Manager: Transmite log JSON estructurado
     Note over Manager: JSON Decoder extrae src_ip: 172.30.0.20
     Manager->>CDB: Consulta src_ip en threat-intel-ip.cdb
-    CDB-->>Manager: Retorna "malicious-PurpleWolf-C2-high"
-    Note over Manager: Evalúa regla 100500 (^malicious-) -> MATCH
-    Manager->>Dash: Emite Alerta Level 12 (High Risk Threat Intel)
-    Dash-->>SOC: Analista visualiza alerta priorizada para Threat Hunting
+    CDB-->>Manager: La clave 172.30.0.20 está presente
+    Note over Manager: 86601 + address_match_key -> 100500, nivel 12
+    Manager->>Dash: Emite alerta 100500 de nivel 12
+    Note over Dash: Analista visualiza alerta priorizada para Threat Hunting
 ```
 
 ---
@@ -1492,31 +1523,37 @@ CHECKLIST OPERATIVO DE THREAT INTELLIGENCE:
 [ ] cyberrange-suricata figura en estado Active en agent_control
 [ ] DVWA responde a peticiones HTTP desde cybersoc-attacker
 [ ] El SID 1000001 se registra en eve.json
-[ ] El evento BASE se visualiza en alerts.json del Manager
-[ ] El archivo threat-intel-ip contiene los IOCs clasificados
+[ ] El evento de comprobación llega a alerts.json del Manager
+[ ] Una sola lista threat-intel-ip contiene únicamente los tres IOC maliciosos simulados
 [ ] El usuario wazuh tiene permisos de lectura y escritura en /var/ossec/etc/lists
 [ ] threat-intel-ip está registrado en el bloque <ruleset> de ossec.conf
-[ ] cybersoc_threat_intel.xml define las reglas 100500 y 100501
+[ ] cybersoc_threat_intel.xml define únicamente la regla TI 100500 de nivel 12
 [ ] wazuh-analysisd -t valida la sintaxis sin errores
-[ ] wazuh-logtest confirma la activación de la regla 100500
+[ ] wazuh-logtest confirma 100500 / nivel 12 para la IP listada
+[ ] El control negativo con IP ausente conserva 86601 / nivel 3
 [ ] Los eventos con threatintel=real-* se registran en Suricata
 [ ] Los eventos reales llegan a alerts.json en el Manager
-[ ] La regla 100500 aparece en alerts.json con Nivel 12
+[ ] La misma ejecución TI_RUN aparece en alerts.json con regla 100500 y nivel 12
+[ ] eve.json conserva su historial; no fue truncado ni borrado
 [ ] La alerta 100500 se visualiza en el Dashboard en Threat Hunting
 [ ] data.src_ip muestra 172.30.0.20 en la alerta almacenada
 [ ] Se comprende la diferencia metodológica entre alerta e IOC correlacionado
 ```
 
-### Conclusión práctica del laboratorio
+### Entrega y conclusión práctica del laboratorio
+
+Entrega el estado `Active` del agente, la lista y la regla aplicadas, las salidas positiva y negativa de `wazuh-logtest`, y el evento EVE junto con su alerta real en `alerts.json` usando el mismo marcador. Añade la captura de Threat Hunting y una explicación de por qué una coincidencia de IOC no prueba un compromiso.
+
 Al completar este procedimiento, se demuestra de forma rigurosa la transformación operativa de un evento:
 
-> *"Suricata detectó actividad HTTP desde `172.30.0.20`. Wazuh recibió el evento y consultó la dirección contra nuestra lista de Threat Intelligence. Se identificó una coincidencia con el indicador `malicious-PurpleWolf-C2-high`, disparando la regla 100500 con severidad 12. La alerta ha sido priorizada para iniciar una investigación de Threat Hunting."*
+> *"Suricata detectó actividad HTTP desde `172.30.0.20`. Wazuh recibió el evento y consultó la dirección contra nuestra lista de Threat Intelligence. Se identificó la IP `172.30.0.20` como clave de la lista, disparando la regla 100500 con severidad 12. La alerta ha sido priorizada para iniciar una investigación de Threat Hunting."*
 
 ---
 
 ## Referencias
 
-- [Wazuh: CDB Lists documentation](https://documentation.wazuh.com/current/user-manual/ruleset/cdb-lists.html)
+- [Wazuh: CDB Lists documentation](https://documentation.wazuh.com/current/user-manual/ruleset/cdb-list.html)
+- [Wazuh: Pruebas de decodificadores y reglas](https://documentation.wazuh.com/current/user-manual/ruleset/testing.html)
 - [Wazuh: Custom Rules and Decoders](https://documentation.wazuh.com/current/user-manual/ruleset/custom.html)
 - [Suricata EVE JSON format](https://docs.suricata.io/en/latest/output/eve/eve-json-format.html)
 - [MITRE ATT&CK Framework](https://attack.mitre.org/)
