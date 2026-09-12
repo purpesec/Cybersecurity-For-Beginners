@@ -34,11 +34,11 @@ Una alerta es una señal investigable. No demuestra por sí sola compromiso ni a
 En [CyberSOC Lab](../06-cybersoc-lab/README.md), verifica el agente Active, comprueba EVE JSON, sigue una alerta hasta alerts.json y usa wazuh-logtest para distinguir una prueba de regla de un evento real.
 
 ~~~bash
-# VM 2
+: VM 2
 sudo systemctl status wazuh-agent --no-pager
 sudo /var/ossec/bin/wazuh-logcollector -t
 
-# VM 1
+: VM 1
 cd /opt/wazuh-docker/single-node
 sudo docker compose ps
 sudo docker compose exec -T wazuh.manager /var/ossec/bin/agent_control -lc
