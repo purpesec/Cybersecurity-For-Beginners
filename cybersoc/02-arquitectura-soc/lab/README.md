@@ -1,13 +1,15 @@
-# Laboratorio CyberSOC: Detección NIDS y Threat Intelligence con Wazuh CDB Lists
+# Laboratorio CyberSOC: NIDS, Threat Intelligence y Threat Hunting con YARA
 
 [Inicio](../../../README.md) | [CyberSOC](../../README.md) | [Capítulo 02](../README.md)
 
 > [!CAUTION]
 > Uso exclusivo en un entorno de laboratorio aislado. DVWA no debe publicarse en Internet.
 
+**Partes:** [1. Despliegue NIDS](#1-verificación-de-conectividad) · [2. Threat Intelligence](#parte-2-threat-intelligence-con-wazuh-cdb-lists) · [3. Threat Hunting con YARA](#parte-3-threat-hunting-con-yara-fim-y-wazuh)
+
 ## Objetivo
 
-Desplegar el flujo completo de telemetría y detección: desde una petición web controlada a DVWA e inspección por Suricata NIDS, hasta el enriquecimiento de eventos mediante listas CDB de Threat Intelligence y priorización de alertas de nivel 12 en Wazuh Dashboard.
+Desplegar el flujo completo de telemetría y detección: desde una petición web controlada a DVWA e inspección por Suricata NIDS, hasta el enriquecimiento de eventos mediante listas CDB de Threat Intelligence y priorización de alertas de nivel 12 en Wazuh Dashboard. Completar la investigación en el host con YARA, FIM y búsquedas programadas.
 
 ## Arquitectura
 
@@ -1547,6 +1549,428 @@ Entrega el estado `Active` del agente, la lista y la regla aplicadas, las salida
 Al completar este procedimiento, se demuestra de forma rigurosa la transformación operativa de un evento:
 
 > *"Suricata detectó actividad HTTP desde `172.30.0.20`. Wazuh recibió el evento y consultó la dirección contra nuestra lista de Threat Intelligence. Se identificó la IP `172.30.0.20` como clave de la lista, disparando la regla 100500 con severidad 12. La alerta ha sido priorizada para iniciar una investigación de Threat Hunting."*
+
+---
+
+## Parte 3: Threat Hunting con YARA, FIM y Wazuh
+
+Continúa después de la Parte 2. Ejecuta los comandos en Bash de la VM indicada; el Manager sigue en Docker **v4.14.7**.
+
+**Hipótesis:** el host de la alerta TI contiene archivos con indicadores PurpleWolf. Buscarás esos archivos con YARA y contrastarás sus cambios con FIM. Los artefactos son texto inofensivo; la IP del atacante se reutiliza como C2 ficticio.
+
+| Dónde | Qué ejecutar |
+|---|---|
+| VM 2 — CyberRange | YARA, archivos de prueba, FIM, script y timer |
+| VM 1 — CyberSOC | Regla Wazuh, logtest y consultas de alertas |
+| Dashboard | Comparación de TI, FIM y YARA del mismo agente |
+
+FIM registra cambios. El timer ejecuta YARA de forma independiente; FIM no dispara el script.
+
+### 61. VM 2 — Instalar y crear directorios
+
+```bash
+sudo apt update
+sudo apt install -y yara jq
+sudo mkdir -p /var/ossec/etc/yara/rules
+sudo mkdir -p /opt/cybersoc-hunting/evidence
+yara --version
+command -v yara
+```
+
+### 62. VM 2 — Crear la regla YARA
+
+```bash
+sudo tee /var/ossec/etc/yara/rules/cybersoc_purplewolf.yar >/dev/null <<'EOF'
+rule CYBERSOC_PurpleWolf_Artifact
+{
+    meta:
+        description = "Artefactos simulados PurpleWolf del lab CyberSOC"
+        author = "CyberSOC"
+        severity = "high"
+
+    strings:
+        $campaign = "PurpleWolf" ascii nocase
+        $c2       = "172.30.0.20" ascii
+        $marker   = "CYBERSOC-LAB" ascii
+        $agent    = "PurpleWolf-C2" ascii nocase
+
+    condition:
+        3 of them
+}
+EOF
+
+sudo yara /var/ossec/etc/yara/rules/cybersoc_purplewolf.yar /dev/null
+```
+
+**Esperado:** sin errores. La condición requiere tres cadenas; $campaign también puede coincidir dentro de PurpleWolf-C2.
+
+### 63. VM 2 — Control negativo y artefacto de prueba
+
+```bash
+echo "Archivo normal del laboratorio CyberSOC" |
+  sudo tee /opt/cybersoc-hunting/evidence/normal.txt
+sudo yara /var/ossec/etc/yara/rules/cybersoc_purplewolf.yar \
+  /opt/cybersoc-hunting/evidence/normal.txt
+```
+
+**Esperado:** sin salida para normal.txt.
+
+```bash
+sudo tee /opt/cybersoc-hunting/evidence/purplewolf_update.dat >/dev/null <<'EOF'
+CYBERSOC-LAB
+Application: System Update Service
+Campaign: PurpleWolf
+C2: 172.30.0.20
+User-Agent: PurpleWolf-C2
+Status: ACTIVE
+EOF
+
+sudo yara -s /var/ossec/etc/yara/rules/cybersoc_purplewolf.yar \
+  /opt/cybersoc-hunting/evidence/purplewolf_update.dat
+sha256sum /opt/cybersoc-hunting/evidence/purplewolf_update.dat
+```
+
+**Esperado:** CYBERSOC_PurpleWolf_Artifact y las cadenas coincidentes.
+
+### 64. VM 2 — Configurar FIM y la lectura del log YARA
+
+```bash
+sudo touch /var/log/cybersoc-yara.log
+sudo chown root:wazuh /var/log/cybersoc-yara.log
+sudo chmod 640 /var/log/cybersoc-yara.log
+sudo cp -p /var/ossec/etc/ossec.conf \
+  "/var/ossec/etc/ossec.conf.bak-yara-$(date +%Y%m%dT%H%M%S)"
+sudo nano /var/ossec/etc/ossec.conf
+```
+
+Dentro del bloque **syscheck existente**, deja disabled en no y scan_on_start en yes. Añade la ruta una sola vez, conservando las demás opciones:
+
+```xml
+<directories realtime="yes" check_all="yes">/opt/cybersoc-hunting/evidence</directories>
+```
+
+Antes del último cierre de ossec_config, añade una sola vez:
+
+```xml
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/cybersoc-yara.log</location>
+</localfile>
+```
+
+Valida los tres componentes; reinicia solo si pasan:
+
+```bash
+sudo /var/ossec/bin/wazuh-agentd -t &&
+sudo /var/ossec/bin/wazuh-syscheckd -t &&
+sudo /var/ossec/bin/wazuh-logcollector -t &&
+sudo systemctl restart wazuh-agent
+```
+
+```bash
+sudo systemctl status wazuh-agent --no-pager
+sudo grep -Ei 'connected|syscheck|cybersoc-yara|error' \
+  /var/ossec/logs/ossec.log | tail -30
+```
+
+**Esperado:** conexión al Manager, lectura del log YARA y fin del escaneo FIM inicial tras este reinicio. Espera a que termine antes del paso 65; vuelve a consultar el log si sigue en curso.
+
+### 65. VM 2 → VM 1 — Comprobar FIM con un archivo nuevo
+
+En **VM 2**:
+
+```bash
+FIM_FILE="/opt/cybersoc-hunting/evidence/fim-test-$(date -u +%Y%m%dT%H%M%S)-$.txt"
+printf 'FIM TEST\n' | sudo tee "$FIM_FILE"
+printf 'Copia esta ruta en VM 1: %s\n' "$FIM_FILE"
+```
+
+En **VM 1**:
+
+```bash
+sudo apt install -y jq
+cd /opt/wazuh-docker/single-node
+sudo docker compose exec -T wazuh.manager /var/ossec/bin/agent_control -lc
+read -r -p "Pega la ruta FIM_FILE de VM 2: " FIM_FILE
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json |
+  jq -c --arg file "$FIM_FILE" 'select(
+    .agent.name=="cyberrange-suricata" and .syscheck.path==$file
+  )' | tail -3
+```
+
+**Esperado:** agente Active y alerta FIM con la ruta nueva. Si no ha llegado, espera unos segundos y repite la consulta.
+
+### 66. VM 2 — Crear el script de búsqueda
+
+```bash
+sudo tee /usr/local/bin/cybersoc-yara-scan.sh >/dev/null <<'EOF'
+#!/bin/bash
+set -euo pipefail
+
+RULES="/var/ossec/etc/yara/rules/cybersoc_purplewolf.yar"
+TARGET="/opt/cybersoc-hunting/evidence"
+LOG="/var/log/cybersoc-yara.log"
+RUN_ID="yara-$(date -u +%Y%m%dT%H%M%S)-$"
+
+while IFS= read -r -d '' FILE; do
+    MATCHES=$(/usr/bin/yara "$RULES" "$FILE")
+    [ -n "$MATCHES" ] || continue
+    RULE=$(printf '%s\n' "$MATCHES" | awk 'NR==1 {print $1}')
+    SHA256=$(sha256sum -- "$FILE" | awk '{print $1}')
+
+    jq -cn \
+      --arg event_type "yara_match" \
+      --arg rule "$RULE" \
+      --arg file "$FILE" \
+      --arg sha256 "$SHA256" \
+      --arg severity "high" \
+      --arg run_id "$RUN_ID" \
+      --arg scanned_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+      '{event_type:$event_type,yara_rule:$rule,file:$file,
+        sha256:$sha256,severity:$severity,run_id:$run_id,
+        scanned_at:$scanned_at}' >> "$LOG"
+done < <(find "$TARGET" -type f -print0)
+
+printf 'RUN_ID=%s\n' "$RUN_ID"
+EOF
+
+sudo chown root:root /usr/local/bin/cybersoc-yara-scan.sh
+sudo chmod 750 /usr/local/bin/cybersoc-yara-scan.sh
+sudo bash -n /usr/local/bin/cybersoc-yara-scan.sh
+sudo /usr/local/bin/cybersoc-yara-scan.sh
+sudo tail -1 /var/log/cybersoc-yara.log | jq .
+```
+
+**Esperado:** JSON con yara_match, regla, ruta, SHA256, run_id y fecha. No debe generar coincidencia para normal.txt. No vacíes el log; run_id distingue cada ejecución. Los errores de YARA permanecen visibles.
+
+### 67. VM 1 — Crear la regla Wazuh 100600
+
+```bash
+cd /opt/wazuh-docker/single-node
+sudo docker compose exec -T wazuh.manager \
+  sh -c 'grep -R -n "id=\"100600\"" /var/ossec/etc/rules || true'
+```
+
+**Esperado en la primera ejecución:** sin salida. Si el ID ya existe, comprueba que sea esta regla y actualiza su archivo sin duplicarlo. Si pertenece a otra regla, usa un ID libre y adapta las consultas siguientes.
+
+```bash
+sudo docker compose exec -u 0 -T wazuh.manager sh -c '
+if [ -f /var/ossec/etc/rules/cybersoc_yara.xml ]; then
+  mkdir -p /var/ossec/backup-cybersoc
+  cp -p /var/ossec/etc/rules/cybersoc_yara.xml \
+    "/var/ossec/backup-cybersoc/cybersoc_yara.xml.$(date +%Y%m%dT%H%M%S)"
+fi
+'
+sudo docker compose exec -u 0 -T wazuh.manager \
+  sh -c 'cat > /var/ossec/etc/rules/cybersoc_yara.xml' <<'EOF'
+<group name="cybersoc_yara,">
+  <rule id="100600" level="12">
+    <decoded_as>json</decoded_as>
+    <field name="event_type">^yara_match$</field>
+    <field name="yara_rule">^CYBERSOC_PurpleWolf_Artifact$</field>
+    <description>CYBERSOC - YARA detected PurpleWolf artifact</description>
+    <group>yara,threat_hunting,malware_detection,</group>
+  </rule>
+</group>
+EOF
+
+sudo docker compose exec -u 0 -T wazuh.manager sh -c '
+chown wazuh:wazuh /var/ossec/etc/rules/cybersoc_yara.xml
+chmod 660 /var/ossec/etc/rules/cybersoc_yara.xml
+'
+sudo docker compose exec -T wazuh.manager /var/ossec/bin/wazuh-analysisd -t &&
+sudo docker compose restart wazuh.manager
+```
+
+Solo reinicia si la validación termina sin errores. La regla queda en etc/rules del volumen del Manager del despliegue anterior.
+
+### 68. VM 1 — Validar la detección con logtest
+
+```bash
+sudo docker compose ps
+sudo docker compose exec -it wazuh.manager /var/ossec/bin/wazuh-logtest
+```
+
+Pega esta línea y pulsa Enter:
+
+```json
+{"event_type":"yara_match","yara_rule":"CYBERSOC_PurpleWolf_Artifact","file":"/opt/cybersoc-hunting/evidence/purplewolf_update.dat","sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","severity":"high","run_id":"logtest"}
+```
+
+**Esperado:** id 100600, level 12. Sal con Ctrl+C. Logtest prueba reglas; no produce una alerta real en alerts.json.
+
+Antes de continuar:
+
+```bash
+sudo docker compose exec -T wazuh.manager /var/ossec/bin/agent_control -lc
+```
+
+**Esperado:** cyberrange-suricata en Active. Si aún no está conectado, revisa el log del agente y repite la comprobación.
+
+### 69. VM 2 — Ejecutar una búsqueda real
+
+```bash
+printf 'HUNT-ID: %s\n' "$(date -u +%Y%m%dT%H%M%S)" |
+  sudo tee -a /opt/cybersoc-hunting/evidence/purplewolf_update.dat
+sudo /usr/local/bin/cybersoc-yara-scan.sh
+sudo tail -1 /var/log/cybersoc-yara.log | jq .
+sha256sum /opt/cybersoc-hunting/evidence/purplewolf_update.dat
+```
+
+Conserva el RUN_ID impreso y comprueba el hash del archivo contra el JSON. La modificación también debe generar un evento FIM.
+
+### 70. VM 1 — Verificar la alerta real de esta ejecución
+
+```bash
+cd /opt/wazuh-docker/single-node
+read -r -p "Pega el valor RUN_ID de VM 2 (sin RUN_ID=): " YARA_RUN
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json |
+  jq -c --arg run "$YARA_RUN" 'select(
+    .agent.name=="cyberrange-suricata" and .data.run_id==$run
+    and .rule.id=="100600" and .rule.level==12
+  )' | tail -1 | jq .
+```
+
+**Esperado:** alerta reciente con el mismo run_id, data.file, data.sha256 y regla 100600. Una salida vacía no confirma éxito: espera la recepción y vuelve a consultar.
+
+### 71. VM 2 — Automatizar cada minuto
+
+```bash
+sudo tee /etc/systemd/system/cybersoc-yara.service >/dev/null <<'EOF'
+[Unit]
+Description=CyberSOC YARA Hunting Scan
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/cybersoc-yara-scan.sh
+EOF
+
+sudo tee /etc/systemd/system/cybersoc-yara.timer >/dev/null <<'EOF'
+[Unit]
+Description=CyberSOC periodic YARA hunting
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+AccuracySec=1s
+Unit=cybersoc-yara.service
+
+[Install]
+WantedBy=timers.target
+EOF
+
+sudo systemd-analyze verify /etc/systemd/system/cybersoc-yara.service \
+  /etc/systemd/system/cybersoc-yara.timer &&
+sudo systemctl daemon-reload &&
+sudo systemctl enable --now cybersoc-yara.timer
+systemctl list-timers --all cybersoc-yara.timer
+```
+
+El script vuelve a registrar las coincidencias en cada ejecución; esta práctica no aplica deduplicación.
+
+### 72. VM 2 — Prueba automática con otro archivo
+
+```bash
+FINAL_FILE="/opt/cybersoc-hunting/evidence/purplewolf_final-$(date -u +%Y%m%dT%H%M%S)-$.dat"
+sudo tee "$FINAL_FILE" >/dev/null <<'EOF'
+CYBERSOC-LAB
+Campaign: PurpleWolf
+C2: 172.30.0.20
+User-Agent: PurpleWolf-C2
+Final-Test: TRUE
+EOF
+printf 'Copia esta ruta en VM 1: %s\n' "$FINAL_FILE"
+systemctl list-timers --all cybersoc-yara.timer
+```
+
+**No ejecutes el script manualmente.** Espera el siguiente disparo del timer (aproximadamente un minuto) y comprueba en la misma terminal:
+
+```bash
+sudo journalctl -u cybersoc-yara.service -n 15 --no-pager
+sudo jq -c --arg file "$FINAL_FILE" 'select(.file==$file)' \
+  /var/log/cybersoc-yara.log | tail -1
+sha256sum "$FINAL_FILE"
+```
+
+**Esperado:** servicio finalizado sin errores y JSON del archivo nuevo. El servicio oneshot puede quedar inactive (dead) tras terminar correctamente; el timer debe seguir activo.
+
+### 73. VM 1 — Confirmar FIM y YARA automáticos
+
+```bash
+cd /opt/wazuh-docker/single-node
+read -r -p "Pega la ruta FINAL_FILE de VM 2: " FINAL_FILE
+
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json |
+  jq -c --arg file "$FINAL_FILE" 'select(
+    .agent.name=="cyberrange-suricata" and .syscheck.path==$file
+  )' | tail -3
+
+sudo docker compose exec -T wazuh.manager \
+  cat /var/ossec/logs/alerts/alerts.json |
+  jq -c --arg file "$FINAL_FILE" 'select(
+    .agent.name=="cyberrange-suricata" and .data.file==$file
+    and .rule.id=="100600" and .rule.level==12
+  )' | tail -1 | jq .
+```
+
+**Esperado:** evento FIM y alerta 100600 para la misma ruta nueva. Comprueba el SHA256 contra VM 2.
+
+### 74. Dashboard — Cerrar el hunting
+
+Abre https://192.168.56.10 → **Threat intelligence → Threat Hunting**. Selecciona el intervalo de esta ejecución y aplica:
+
+```text
+agent.name:"cyberrange-suricata" AND rule.id:100600
+```
+
+Para limitarlo a la búsqueda manual, añade data.run_id con el valor del paso 69. Para la prueba automática, filtra data.file por la ruta completa del paso 72.
+
+Consulta FIM:
+
+```text
+agent.name:"cyberrange-suricata" AND rule.groups:syscheck
+```
+
+Consulta la TI anterior, ampliando el intervalo hasta la Parte 2:
+
+```text
+agent.name:"cyberrange-suricata" AND rule.id:100500
+```
+
+Compara agente, timestamps, ruta y hashes disponibles. TI y YARA son alertas independientes; este lab no crea una regla que las correlacione automáticamente.
+
+### 75. Verificación y entrega
+
+- [ ] normal.txt no coincide y el artefacto PurpleWolf sí.
+- [ ] FIM registra la ruta nueva después del escaneo inicial.
+- [ ] Logtest obtiene 100600 / nivel 12.
+- [ ] La búsqueda real llega al Manager con el mismo run_id y SHA256.
+- [ ] El timer genera la detección del archivo final sin ejecutar YARA manualmente.
+- [ ] FIM y YARA aparecen en Dashboard para el agente y archivo esperados.
+
+**Entrega:** salida negativa y positiva de YARA, JSON de la búsqueda real, alerta 100600, evento FIM y captura del Dashboard con el archivo final. Conclusión en una línea: se encontraron indicadores simulados en el host; la coincidencia no prueba malware real.
+
+Al terminar las evidencias, detén el timer para evitar alertas repetidas:
+
+```bash
+# VM 2
+sudo systemctl disable --now cybersoc-yara.timer
+```
+
+### Si una verificación falla
+
+| Punto | Comprobación |
+|---|---|
+| YARA no genera JSON | VM 2: ejecuta el script y revisa su error; prueba la regla directamente sobre el archivo. |
+| FIM no detecta | VM 2: verifica disabled=no, la ruta y el fin del escaneo inicial; después crea otro archivo nuevo. |
+| JSON local sin alerta | Comprueba agente Active, wazuh-logcollector -t, lectura de cybersoc-yara.log y wazuh-analysisd -t. |
+| Timer sin eventos | VM 2: sudo journalctl -u cybersoc-yara.service -n 30 --no-pager. |
+| Manager sí, Dashboard no | Revisa intervalo, filtros y estado de Indexer/Filebeat. |
+
+Referencias de esta parte: [FIM/syscheck](https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/syscheck.html), [validación de configuración](https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/verifying-configuration.html) y [decoder JSON](https://documentation.wazuh.com/current/user-manual/ruleset/decoders/json-decoder.html).
 
 ---
 
