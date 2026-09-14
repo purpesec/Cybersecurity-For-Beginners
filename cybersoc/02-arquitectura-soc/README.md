@@ -30,7 +30,7 @@ Al finalizar este capítulo podrás:
 Un Security Operations Center (SOC) no se limita a recibir alertas aisladas; su valor reside en **contextualizar, enriquecer y priorizar** la telemetría para responder oportunamente ante amenazas reales.
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph Detección Base
         A["Tráfico de Red Atacante"] -->|Puerto 80| B["Aplicación Web (DVWA)"]
         B -.->|Inspección de interfaz| S["Suricata NIDS"]

@@ -693,7 +693,7 @@ Continuación directa del laboratorio Wazuh + Suricata + DVWA, con Wazuh Docker 
 | **IOC Principal** | `172.30.0.20` | Indicador a clasificar en la lista de Threat Intel |
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph Detección Base
         ATT["cybersoc-attacker\n(172.30.0.20)"] -->|Tráfico HTTP| DVWA["cybersoc-dvwa\n(172.30.0.10)"]
         DVWA -.->|Inspección de red| SURI["Suricata IDS"]
