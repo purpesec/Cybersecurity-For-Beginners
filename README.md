@@ -8,7 +8,7 @@ Repositorio de formación en ciberseguridad con cursos organizados por sesiones,
 |---|---|---|---:|---|
 | 1 | [CyberSOC](./cybersoc/) | Datos, defensa, SOC, Wazuh, Threat Intelligence y Threat Hunting | 12 sesiones + laboratorio integrador | Disponible |
 | 2 | [Ethical Hacking](./ethical-hacking/) | Ética, OSINT, reconocimiento, enumeración y explotación controlada | 5 sesiones | Disponible |
-| 3 | [Malware Analysis](./malware-analysis/) | Triage, análisis estático, formato PE y telemetría dinámica | 5 sesiones | Disponible |
+| 3 | [Malware Analysis](./malware-analysis/) | Windows Internals, FLARE VM, triaje estático, telemetría, reversing x86/x64, x64dbg y YARA/Sigma | 14 sesiones + Skills Assessment | En desarrollo |
 | 4 | [Pentesting Web](./pentesting-web/) | HTTP, SQL Injection, Burp Suite y mitigaciones | 5 capítulos | Disponible |
 | 5 | [Privilege Escalation](./privilege-escalation/) | Enumeración y escalada de privilegios en Linux | 7 capítulos | Disponible |
 
