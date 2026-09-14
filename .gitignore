@@ -22,3 +22,8 @@ eve.json
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Configuración y agentes de IA / Skills
+.agents/
+.kilo/
+.skills/
