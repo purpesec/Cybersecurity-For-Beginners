@@ -2,6 +2,8 @@
 
 [Inicio](../README.md) | [Configurar laboratorio](../setup/README.md)
 
+[Requisitos previos](../requisitos-previos/README.md): módulos 01, 05, 06, 08, 13 y 14.
+
 Ruta práctica para pasar de un acceso inicial con pocos privilegios al control administrativo de un sistema Linux, comprendiendo primero cómo se enumeran los privilegios reales y, después, cómo se abusa de configuraciones inseguras concretas dentro de una máquina virtual aislada.
 
 > [!CAUTION]

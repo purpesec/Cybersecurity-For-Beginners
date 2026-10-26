@@ -2,6 +2,8 @@
 
 [Inicio](../README.md) | [Configurar laboratorio](../setup/README.md)
 
+[Requisitos previos](../requisitos-previos/README.md): módulos 01, 02, 03, 05, 06, 09, 10, 11 y 16.
+
 Ruta completa para comprender datos, amenazas, defensa, SOC, Threat Intelligence y Threat Hunting con Wazuh y Suricata.
 
 > [!CAUTION]

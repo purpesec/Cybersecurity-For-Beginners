@@ -1,6 +1,6 @@
 # Threat intel y hunting
 
-[Inicio](../../README.md) · [Requisitos previos](../README.md) · [Anterior: Forense y respuesta](../10-forense-y-respuesta/README.md) · [Siguiente: Índice](../README.md)
+[Inicio](../../README.md) · [Requisitos previos](../README.md) · [Anterior: Forense y respuesta](../10-forense-y-respuesta/README.md) · [Siguiente: Cloud y servicios](../12-cloud-y-servicios/README.md)
 
 La inteligencia convierte datos dispersos en contexto sobre adversarios; la caza proactiva busca lo que las alertas no detectaron. Este módulo reúne las fuentes, los modelos y las herramientas que sostienen ambas actividades.
 

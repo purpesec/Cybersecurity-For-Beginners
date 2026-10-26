@@ -2,6 +2,8 @@
 
 [Inicio](../README.md) | [Configurar laboratorio](../setup/README.md)
 
+[Requisitos previos](../requisitos-previos/README.md): módulos 01, 02, 03, 05, 06, 07, 08, 13 y 14.
+
 Ruta técnica y progresiva para comprender la metodología de una evaluación de seguridad, desde el marco ético y autorizado hasta el reconocimiento, la enumeración, la validación controlada de hallazgos y la entrega de un reporte profesional.
 
 > [!CAUTION]

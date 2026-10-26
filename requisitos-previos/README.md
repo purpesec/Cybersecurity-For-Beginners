@@ -41,11 +41,11 @@ No es un curso ni una certificación. Es un **lector de prerrequisitos**: se con
 | 09 | [Defensa y monitoreo](./09-defensa-y-monitoreo/README.md) | 20 | Disponible |
 | 10 | [Forense y respuesta](./10-forense-y-respuesta/README.md) | 12 | Disponible |
 | 11 | [Threat intel y hunting](./11-threat-intel-y-hunting/README.md) | 13 | Disponible |
-| 12 | Cloud y servicios | 25 | En preparación |
-| 13 | Herramientas de análisis | 22 | En preparación |
-| 14 | Plataformas y laboratorios | 8 | En preparación |
-| 15 | Programación y automatización | 5 | En preparación |
-| 16 | Marcos y certificaciones | 27 | En preparación |
+| 12 | [Cloud y servicios](./12-cloud-y-servicios/README.md) | 25 | Disponible |
+| 13 | [Herramientas de análisis](./13-herramientas-de-analisis/README.md) | 22 | Disponible |
+| 14 | [Plataformas y laboratorios](./14-plataformas-y-laboratorios/README.md) | 8 | Disponible |
+| 15 | [Programación y automatización](./15-programacion-y-automatizacion/README.md) | 5 | Disponible |
+| 16 | [Marcos y certificaciones](./16-marcos-y-certificaciones/README.md) | 27 | Disponible |
 
 ## Relación con las rutas
 
@@ -67,6 +67,6 @@ Se priorizan organismos y documentación primaria: IETF (RFC), NIST, OWASP, IEEE
 
 ## Alcance
 
-La cobertura es completa respecto al roadmap: 289 conceptos. Los módulos se publican por fases y el estado se actualiza en la tabla anterior.
+La cobertura es completa respecto al roadmap: 289 conceptos en 16 módulos.
 
 [Inicio](../README.md) · [Laboratorio](../setup/README.md)
