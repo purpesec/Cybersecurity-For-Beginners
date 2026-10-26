@@ -6,7 +6,7 @@
 
 Repositorio de formación en ciberseguridad con cursos organizados por sesiones, teoría, guías prácticas y laboratorios para entornos controlados.
 
-[Catálogo](#catálogo) · [Cómo estudiar](#cómo-estudiar) · [Laboratorio](./setup/README.md) · [Recursos](./resources/README.md)
+[Catálogo](#catálogo) · [Cómo estudiar](#cómo-estudiar) · [Requisitos previos](./requisitos-previos/README.md) · [Laboratorio](./setup/README.md) · [Recursos](./resources/README.md)
 
 ## Qué incluye
 
@@ -14,6 +14,10 @@ Repositorio de formación en ciberseguridad con cursos organizados por sesiones,
 - **Laboratorios guiados:** prácticas paso a paso sobre máquinas virtuales aisladas, con el código vulnerable incluido cuando corresponde.
 - **Guías de entorno:** configuración de red host-only, recursos por ruta y recomendaciones de hardware.
 - **Material reutilizable:** referencias rápidas, diccionarios y scripts compartidos entre cursos.
+
+## Requisitos previos
+
+Antes de empezar una ruta conviene dominar el vocabulario base: sistemas, redes, protocolos, seguridad y amenazas. El bloque [Requisitos previos](./requisitos-previos/README.md) reúne los 289 conceptos del roadmap de ciberseguridad en 16 módulos, con definición, ideas clave y fuentes oficiales.
 
 ## Catálogo
 
@@ -42,10 +46,11 @@ CyberSOC → Ethical Hacking → Pentesting Web → Privilege Escalation → An�
 ## Cómo estudiar
 
 1. **Prepara el entorno.** Configura una red aislada y revisa los recursos de cada ruta en la [guía de laboratorio](./setup/README.md).
-2. **Elige una ruta.** Revisa el `README.md` de la carpeta: ahí están el índice, los objetivos y los prerrequisitos.
-3. **Estudia la teoría.** Lee la sesión completa antes de ejecutar comandos.
-4. **Ejecuta el laboratorio.** Sigue la guía, registra comandos, salidas, capturas y conclusiones.
-5. **Valida el cierre.** Comprueba los criterios de finalización antes de avanzar a la siguiente sesión.
+2. **Repasa los prerrequisitos.** Si un concepto no te resulta familiar, consúltalo en [Requisitos previos](./requisitos-previos/README.md) antes de continuar.
+3. **Elige una ruta.** Revisa el `README.md` de la carpeta: ahí están el índice, los objetivos y los prerrequisitos.
+4. **Estudia la teoría.** Lee la sesión completa antes de ejecutar comandos.
+5. **Ejecuta el laboratorio.** Sigue la guía, registra comandos, salidas, capturas y conclusiones.
+6. **Valida el cierre.** Comprueba los criterios de finalización antes de avanzar a la siguiente sesión.
 
 ## Estructura del repositorio
 
@@ -56,6 +61,7 @@ CyberSOC → Ethical Hacking → Pentesting Web → Privilege Escalation → An�
 ├── malware-analysis/         Análisis de malware e ingeniería inversa
 ├── pentesting-web/           Seguridad de aplicaciones web
 ├── privilege-escalation/     Escalada de privilegios en Linux
+├── requisitos-previos/       Prerrequisitos del roadmap de ciberseguridad
 ├── images/                   Portadas y diagramas del repositorio
 ├── resources/                Material compartido entre rutas
 ├── setup/                    Configuración del laboratorio
