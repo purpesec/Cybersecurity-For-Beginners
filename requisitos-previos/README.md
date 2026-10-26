@@ -36,11 +36,11 @@ No es un curso ni una certificación. Es un **lector de prerrequisitos**: se con
 | 04 | [Red y criptografía aplicada](./04-red-y-criptografia/README.md) | 23 | Disponible |
 | 05 | [Sistemas operativos](./05-sistemas-operativos/README.md) | 20 | Disponible |
 | 06 | [Fundamentos de seguridad](./06-fundamentos-seguridad/README.md) | 16 | Disponible |
-| 07 | Amenazas y malware | 19 | En preparación |
-| 08 | Ataques y explotación | 18 | En preparación |
-| 09 | Defensa y monitoreo | 20 | En preparación |
-| 10 | Forense y respuesta | 12 | En preparación |
-| 11 | Threat intel y hunting | 13 | En preparación |
+| 07 | [Amenazas y malware](./07-amenazas-y-malware/README.md) | 19 | Disponible |
+| 08 | [Ataques y explotación](./08-ataques-y-explotacion/README.md) | 18 | Disponible |
+| 09 | [Defensa y monitoreo](./09-defensa-y-monitoreo/README.md) | 20 | Disponible |
+| 10 | [Forense y respuesta](./10-forense-y-respuesta/README.md) | 12 | Disponible |
+| 11 | [Threat intel y hunting](./11-threat-intel-y-hunting/README.md) | 13 | Disponible |
 | 12 | Cloud y servicios | 25 | En preparación |
 | 13 | Herramientas de análisis | 22 | En preparación |
 | 14 | Plataformas y laboratorios | 8 | En preparación |

@@ -1,6 +1,6 @@
 # Fundamentos de seguridad
 
-[Inicio](../../README.md) · [Requisitos previos](../README.md) · [Anterior: Sistemas operativos](../05-sistemas-operativos/README.md) · [Índice](../README.md)
+[Inicio](../../README.md) · [Requisitos previos](../README.md) · [Anterior: Sistemas operativos](../05-sistemas-operativos/README.md) · [Siguiente: Amenazas y malware](../07-amenazas-y-malware/README.md)
 
 Este módulo fija el vocabulario con el que se razona sobre seguridad: qué se protege, contra qué, con qué criterios y cómo se mide si un control funciona. Sin estas definiciones, las herramientas y los ataques se explican como recetas.
 
@@ -283,4 +283,4 @@ El inicio de sesión único permite autenticarse una vez y acceder a varios serv
 
 ---
 
-[Requisitos previos](../README.md) · [Índice](../README.md)
+[Requisitos previos](../README.md) · [Siguiente: Amenazas y malware](../07-amenazas-y-malware/README.md)

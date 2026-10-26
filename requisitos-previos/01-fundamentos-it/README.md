@@ -221,7 +221,7 @@ Bash (*Bourne Again Shell*) es el intérprete de comandos por defecto en la mayo
 
 **En el curso:** se usa para automatizar tareas en [CyberSOC](../../cybersoc/README.md) y en los laboratorios de Linux.
 
-**Fuentes:** [GNU — Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html) · [Bash Hackers Wiki](https://mywiki.wooledge.org/BashGuide) · [ShellCheck](https://www.shellcheck.net/)
+**Fuentes:** [GNU — Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html) · [Bash Hackers Wiki](https://tldp.org/LDP/abs/html/) · [ShellCheck](https://www.shellcheck.net/)
 
 ---
 

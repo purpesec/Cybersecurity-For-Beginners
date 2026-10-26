@@ -62,7 +62,7 @@ Una red es un conjunto de dispositivos conectados que intercambian datos mediant
 
 **En el curso:** [setup](../../setup/README.md) define la red host-only de los laboratorios.
 
-**Fuentes:** [Cisco — What is networking?](https://www.cisco.com/c/en/us/solutions/enterprise-networks/what-is-computer-networking.html) · [RFC 1122 — Internet hosts](https://www.rfc-editor.org/rfc/rfc1122) · [Cloudflare Learning — What is a network?](https://www.cloudflare.com/learning/network-layer/what-is-a-computer-network/)
+**Fuentes:** [Cisco — What is networking?](https://www.cisco.com/c/en/us/solutions/enterprise-networks/what-is-computer-networking.html) · [RFC 1122 — Internet hosts](https://www.rfc-editor.org/rfc/rfc1122) · [Cloudflare Learning — What is a network?](https://www.cloudflare.com/learning/network-layer/what-is-a-network/)
 
 ---
 
@@ -111,7 +111,7 @@ Las direcciones privadas (RFC 1918) se usan dentro de redes internas y no son en
 
 **En el curso:** los laboratorios usan `192.168.56.0/24` en [setup](../../setup/README.md).
 
-**Fuentes:** [RFC 1918](https://www.rfc-editor.org/rfc/rfc1918) · [IANA — IPv4 special registry](https://www.iana.org/assignments/iana-ipv4-special-registry/) · [Cloudflare — Private IP](https://www.cloudflare.com/learning/network-layer/what-is-a-private-ip-address/)
+**Fuentes:** [RFC 1918](https://www.rfc-editor.org/rfc/rfc1918) · [IANA — IPv4 special registry](https://www.iana.org/assignments/iana-ipv4-special-registry/) · [Cloudflare — Private IP](https://www.cloudflare.com/learning/network-layer/what-is-an-ip-address/)
 
 ---
 
@@ -368,7 +368,7 @@ En un anillo cada dispositivo se conecta al siguiente y el último cierra el cí
 
 **En el curso:** cultura general; útil para leer diagramas de red.
 
-**Fuentes:** [Cisco — Network topologies](https://www.cisco.com/c/en/us/support/docs/availability/high-availability/15114-netwkhw.html) · [IEEE 802.5](https://standards.ieee.org/ieee/802.5/1015/) · [Cloudflare — Network topology](https://www.cloudflare.com/learning/network-layer/what-is-network-topology/)
+**Fuentes:** [Cisco — Network topologies](https://www.cisco.com/c/en/us/support/docs/availability/high-availability/15114-netwkhw.html) · [IEEE 802.5](https://standards.ieee.org/ieee/802.5/1015/) · [Cloudflare — Network topology](https://www.cloudflare.com/learning/network-layer/what-is-a-network/)
 
 ---
 
@@ -384,7 +384,7 @@ En una estrella todos los dispositivos se conectan a un nodo central (switch o h
 
 **En el curso:** es la topología de los laboratorios.
 
-**Fuentes:** [Cisco — Network topologies](https://www.cisco.com/c/en/us/support/docs/availability/high-availability/15114-netwkhw.html) · [Cloudflare — Star topology](https://www.cloudflare.com/learning/network-layer/what-is-network-topology/) · [IEEE 802.3](https://standards.ieee.org/ieee/802.3/7071/)
+**Fuentes:** [Cisco — Network topologies](https://www.cisco.com/c/en/us/support/docs/availability/high-availability/15114-netwkhw.html) · [Cloudflare — Star topology](https://www.cloudflare.com/learning/network-layer/what-is-a-network/) · [IEEE 802.3](https://standards.ieee.org/ieee/802.3/7071/)
 
 ---
 
@@ -400,7 +400,7 @@ En una malla cada nodo se conecta con varios otros. Si es completa, todos se con
 
 **En el curso:** contexto para segmentación y alta disponibilidad en [CyberSOC](../../cybersoc/02-arquitectura-soc/README.md).
 
-**Fuentes:** [Cisco — Network topologies](https://www.cisco.com/c/en/us/support/docs/availability/high-availability/15114-netwkhw.html) · [Cloudflare — Mesh topology](https://www.cloudflare.com/learning/network-layer/what-is-network-topology/) · [RFC 6550 — RPL](https://www.rfc-editor.org/rfc/rfc6550)
+**Fuentes:** [Cisco — Network topologies](https://www.cisco.com/c/en/us/support/docs/availability/high-availability/15114-netwkhw.html) · [Cloudflare — Mesh topology](https://www.cloudflare.com/learning/network-layer/what-is-a-network/) · [RFC 6550 — RPL](https://www.rfc-editor.org/rfc/rfc6550)
 
 ---
 
