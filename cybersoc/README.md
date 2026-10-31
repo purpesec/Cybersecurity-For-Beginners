@@ -56,4 +56,8 @@ La guía ejecutable está en [CyberSOC Lab](./06-cybersoc-lab/README.md) y se co
 
 Agente Active, evento EVE JSON, alerta TI 100500, YARA positiva y negativa, evento FIM, alerta 100600 con run_id y SHA256, detección automática y filtros del Dashboard.
 
+## Material ampliado
+
+La carpeta [teoria/](./teoria/README.md) desarrolla el curso completo en seis capítulos con capturas de las sesiones, diagramas y autoevaluación. Es material de profundización: complementa estas sesiones, no las reemplaza.
+
 [Volver al catálogo principal](../README.md)

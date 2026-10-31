@@ -153,4 +153,10 @@ flowchart LR
 3. Ejecuta cada laboratorio dentro de la red aislada y conserva las evidencias.
 4. Termina la ruta con el [reporte técnico de la sesión 05](./05-explotacion-controlada-y-reportes/lab/README.md).
 
+---
+
+## Material ampliado
+
+La carpeta [teoria/](./teoria/README.md) desarrolla el curso completo en seis capítulos con capturas de las sesiones, diagramas y autoevaluación. Es material de profundización: complementa estas sesiones, no las reemplaza.
+
 [Volver al Catálogo Principal del Repositorio](../README.md)
