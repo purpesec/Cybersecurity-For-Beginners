@@ -108,10 +108,4 @@ La preparación detallada del entorno está en la [guía de configuración](../s
 - No introduzcas persistencia, movimiento lateral ni cambios fuera de la VM de laboratorio.
 - Restaura la instantánea al acabar para eliminar la configuración vulnerable creada.
 
----
-
-## Material ampliado
-
-La carpeta [teoria/](./teoria/README.md) desarrolla el curso completo en seis capítulos con capturas de las sesiones, diagramas y autoevaluación. Es material de profundización: complementa estos capítulos, no los reemplaza.
-
 [Volver al catálogo principal del repositorio](../README.md)
