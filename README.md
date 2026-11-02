@@ -4,13 +4,13 @@
 
 # Rutas de ciberseguridad
 
-Repositorio de formación en ciberseguridad con cursos organizados por sesiones, teoría, guías prácticas y laboratorios para entornos controlados.
+Repositorio de formación en ciberseguridad con índices de temas, teoría, guías prácticas y laboratorios para entornos controlados. La sección de análisis de malware enlaza a los artículos publicados en el [blog de Purpe](https://purpesec.github.io/blog/).
 
 [Catálogo](#catálogo) · [Cómo estudiar](#cómo-estudiar) · [Requisitos previos](./requisitos-previos/README.md) · [Laboratorio](./setup/README.md) · [Recursos](./resources/README.md)
 
 ## Qué incluye
 
-- **Teoría por sesiones:** cada tema se desarrolla en su propio `README.md`, con conceptos, comandos y criterios de finalización.
+- **Teoría:** las rutas existentes conservan sus sesiones; los artículos de análisis de malware publicados están enlazados desde el índice de su carpeta.
 - **Laboratorios guiados:** prácticas paso a paso sobre máquinas virtuales aisladas, con el código vulnerable incluido cuando corresponde.
 - **Guías de entorno:** configuración de red host-only, recursos por ruta y recomendaciones de hardware.
 - **Material reutilizable:** referencias rápidas, diccionarios y scripts compartidos entre cursos.
@@ -25,7 +25,7 @@ Antes de empezar una ruta conviene dominar el vocabulario base: sistemas, redes,
 |---|---|---|---|---|
 | 1 | [CyberSOC](./cybersoc/) | Datos, defensa, SOC, Wazuh, Threat Intelligence y Threat Hunting | 12 sesiones + laboratorio integrador | `Disponible` |
 | 2 | [Ethical Hacking](./ethical-hacking/) | Ética, OSINT, reconocimiento, enumeración y explotación controlada | 5 sesiones | `Disponible` |
-| 3 | [C-MA: Análisis de malware](./malware-analysis/) | FLARE-VM y REMnux, Windows internals, arquitectura x86, análisis estático y bases de ensamblador | 7 bloques de teoría | `En desarrollo` |
+| 3 | [Análisis de malware](./malware-analysis/) | Fundamentos, FLARE-VM, Windows Internals y análisis de ejecutables | Índice de artículos y laboratorios | `En desarrollo` |
 | 4 | [Pentesting Web](./pentesting-web/) | HTTP, SQL Injection, Burp Suite y mitigaciones | 2 módulos | `Disponible` |
 | 5 | [Privilege Escalation](./privilege-escalation/) | Enumeración y escalada de privilegios en Linux | 7 capítulos | `Disponible` |
 
@@ -48,7 +48,7 @@ CyberSOC → Ethical Hacking → Pentesting Web → Privilege Escalation → An�
 1. **Prepara el entorno.** Configura una red aislada y revisa los recursos de cada ruta en la [guía de laboratorio](./setup/README.md).
 2. **Repasa los prerrequisitos.** Si un concepto no te resulta familiar, consúltalo en [Requisitos previos](./requisitos-previos/README.md) antes de continuar.
 3. **Elige una ruta.** Revisa el `README.md` de la carpeta: ahí están el índice, los objetivos y los prerrequisitos.
-4. **Estudia la teoría.** Lee la sesión completa antes de ejecutar comandos.
+4. **Estudia la teoría.** Sigue el enlace del índice: puede conducir a una sesión del repositorio o a un artículo del blog.
 5. **Ejecuta el laboratorio.** Sigue la guía, registra comandos, salidas, capturas y conclusiones.
 6. **Valida el cierre.** Comprueba los criterios de finalización antes de avanzar a la siguiente sesión.
 
@@ -68,7 +68,7 @@ CyberSOC → Ethical Hacking → Pentesting Web → Privilege Escalation → An�
 └── README.md
 ```
 
-Cada ruta sigue la misma convención:
+Las rutas anteriores siguen normalmente esta convención; análisis de malware está migrando hacia un índice de artículos y una carpeta `labs/`:
 
 ```text
 <ruta>/
@@ -81,7 +81,7 @@ Cada ruta sigue la misma convención:
 
 ## Requisitos
 
-Los materiales se ejecutan en máquinas virtuales con red host-only. Como referencia: 8 GB de RAM para la mayoría de laboratorios y 16 GB para CyberSOC, con 80 GB de disco libre para VMs e instantáneas. Los detalles por ruta están en [setup](./setup/README.md).
+Los materiales se ejecutan en máquinas virtuales. El modo de red depende de la práctica: consulta la guía correspondiente y usa una red interna aislada para el análisis de malware. Como referencia: 8 GB de RAM para la mayoría de laboratorios y 16 GB para CyberSOC, con 80 GB de disco libre para VMs e instantáneas. Los detalles por ruta están en [setup](./setup/README.md).
 
 ## Uso responsable
 
