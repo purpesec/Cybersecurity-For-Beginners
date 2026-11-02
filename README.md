@@ -11,4 +11,4 @@
 - [Preparar el laboratorio](./setup/)
 - [Recursos](./resources/)
 
-La teoría se encuentra en el [blog de Purpe](https://purpesec.github.io/blog/).
+La teoría se encuentra [aquí](https://purpesec.github.io/blog/).
