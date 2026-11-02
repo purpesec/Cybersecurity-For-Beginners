@@ -78,7 +78,7 @@ C es un lenguaje de bajo nivel usado en sistemas operativos, controladores y mal
 - Errores comunes: `strcpy`, `sprintf`, falta de comprobaciones.
 - Herramientas: compiladores, depuradores y sanitizadores.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/04-arquitectura-x86-y-memoria/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [ISO/IEC 9899](https://www.iso.org/standard/74528.html) · [GCC — Documentation](https://gcc.gnu.org/onlinedocs/) · [MITRE CWE-121](https://cwe.mitre.org/data/definitions/121.html)
 

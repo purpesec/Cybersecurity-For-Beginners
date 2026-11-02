@@ -137,7 +137,7 @@ ANY.RUN es un sandbox interactivo en la nube que ejecuta muestras y permite obse
 - El malware puede detectar el entorno y no ejecutarse.
 - No subir muestras confidenciales sin autorización.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [ANY.RUN](https://any.run/) · [ANY.RUN — Documentation](https://any.run/cybersecurity-blog/) · [MITRE ATT&CK — Software](https://attack.mitre.org/software/)
 
@@ -154,7 +154,7 @@ VirusTotal analiza archivos y URL con decenas de motores y ofrece relaciones: do
 - La API gratuita tiene límites de uso.
 - Los resultados son indicios, no veredictos.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/06-triaje-estatico/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [VirusTotal](https://www.virustotal.com/) · [VirusTotal — Docs](https://docs.virustotal.com/) · [MITRE ATT&CK — Indicators](https://attack.mitre.org/)
 

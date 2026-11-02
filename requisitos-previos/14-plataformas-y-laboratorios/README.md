@@ -132,7 +132,7 @@ pwn.college es un programa de aprendizaje práctico centrado en sistemas, binari
 - Complementa el estudio de arquitectura x86.
 - Material abierto y gratuito.
 
-**En el curso:** refuerzo de [Análisis de malware](../../malware-analysis/04-arquitectura-x86-y-memoria/README.md) y [Privilege Escalation](../../privilege-escalation/README.md).
+**En el curso:** refuerzo de [Análisis de malware](../../malware-analysis/README.md) y [Privilege Escalation](../../privilege-escalation/README.md).
 
 **Fuentes:** [pwn.college](https://pwn.college/) · [Arizona State University](https://www.asu.edu/) · [NIST NICE](https://www.nist.gov/itl/applied-cybersecurity/nice)
 

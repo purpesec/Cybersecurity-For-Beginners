@@ -57,7 +57,7 @@ Windows es el sistema de escritorio y servidor más extendido en empresas. Su ec
 - El Registro guarda configuración y es fuente de artefactos forenses.
 - Herramientas: Event Viewer, Task Manager, PowerShell, Sysinternals.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md) y [CyberSOC](../../cybersoc/README.md).
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md) y [CyberSOC](../../cybersoc/README.md).
 
 **Fuentes:** [Microsoft Learn — Windows Server](https://learn.microsoft.com/en-us/windows-server/) · [Microsoft — Sysinternals](https://learn.microsoft.com/en-us/sysinternals/) · [Microsoft — Security baselines](https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/windows-security-configuration-framework/windows-security-baselines)
 
@@ -141,7 +141,7 @@ Los registros de eventos recogen lo que ocurre en el sistema: inicios de sesión
 - La ausencia de un evento también es información.
 - Centralizarlos evita que un atacante los borre localmente.
 
-**En el curso:** [CyberSOC](../../cybersoc/05-soc-siem-y-wazuh/README.md) y [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [CyberSOC](../../cybersoc/05-soc-siem-y-wazuh/README.md) y [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [Microsoft — Event logging](https://learn.microsoft.com/en-us/windows/win32/eventlog/event-logging) · [Microsoft — Audit events](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/audit-policy-recommendations) · [systemd — journal](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html)
 
@@ -221,7 +221,7 @@ El sistema invitado (*guest*) se ejecuta dentro de una máquina virtual o conten
 - Un *escape* de la virtualización rompe el aislamiento.
 - Es la pieza básica de los laboratorios de seguridad.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final) · [Microsoft — Hyper-V](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/) · [VMware — Virtualization](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/)
 
@@ -237,7 +237,7 @@ El sistema anfitrión (*host*) ejecuta el hipervisor y cede recursos a los invit
 - Compartir carpetas o portapapeles reduce el aislamiento.
 - Las instantáneas permiten volver a un estado limpio.
 
-**En el curso:** [setup](../../setup/README.md) y [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** [setup](../../setup/README.md) y [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final) · [Microsoft — Hyper-V security](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview?pivots=windows) · [CIS — Benchmarks](https://www.cisecurity.org/cis-benchmarks)
 
@@ -253,7 +253,7 @@ El hipervisor crea y ejecuta máquinas virtuales, repartiendo CPU, memoria y dis
 - Las vulnerabilidades del hipervisor son críticas.
 - La red virtual (host-only, NAT, bridge) define el aislamiento.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final) · [Linux kernel — KVM](https://www.kernel.org/doc/html/latest/virt/kvm/index.html) · [Microsoft — Hyper-V](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/)
 
@@ -269,7 +269,7 @@ Una máquina virtual es un equipo emulado por software, con CPU, memoria, disco 
 - El rendimiento depende de la virtualización asistida por hardware.
 - Es la base de los laboratorios y del análisis de malware.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final) · [VirtualBox — Manual](https://www.virtualbox.org/manual/) · [VMware — Documentation](https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere.html)
 
@@ -285,7 +285,7 @@ VMware es una familia de productos de virtualización: Workstation y Fusion en e
 - Redes virtuales: host-only, NAT, bridge y redes personalizadas.
 - Sus instantáneas y clones facilitan el análisis.
 
-**En el curso:** alternativa a VirtualBox en [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** alternativa a VirtualBox en [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [VMware — Documentation](https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere.html) · [VMware — Workstation](https://techdocs.broadcom.com/us/en/vmware-cis/desktop-hypervisors/workstation-pro.html) · [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final)
 
@@ -301,7 +301,7 @@ VirtualBox es un hipervisor de tipo 2 gratuito y multiplataforma. Es la opción 
 - Las carpetas compartidas y el portapapeles deben desactivarse en análisis.
 - Las instantáneas permiten volver a un estado limpio.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [VirtualBox — Manual](https://www.virtualbox.org/manual/) · [Oracle — VirtualBox docs](https://docs.oracle.com/en/virtualization/virtualbox/) · [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final)
 
@@ -349,7 +349,7 @@ Una sandbox ejecuta código no confiable en un entorno restringido, con acceso l
 - Un *escape* de la sandbox invalida el análisis.
 - Los servicios en línea automatizan el triaje, pero ocultan detalles.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST — Sandboxing](https://csrc.nist.gov/glossary/term/sandbox) · [Cuckoo — Docs](https://cuckoo.readthedocs.io/) · [Microsoft — Windows Sandbox](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/)
 

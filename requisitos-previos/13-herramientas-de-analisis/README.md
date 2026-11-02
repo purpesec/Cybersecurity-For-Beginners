@@ -78,7 +78,7 @@ Wireshark captura y analiza tráfico de red con decodificación de cientos de pr
 - El tráfico cifrado no se descifra sin claves.
 - La captura requiere privilegios y puede ser masiva.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [Wireshark — User guide](https://www.wireshark.org/docs/) · [Wireshark — Display filters](https://www.wireshark.org/docs/dfref/) · [NIST SP 800-86](https://csrc.nist.gov/pubs/sp/800/86/final)
 
@@ -95,7 +95,7 @@ tcpdump captura paquetes desde la línea de comandos. Es ligero, ubicuo y fácil
 - Escribir a disco demasiado tiempo llena el disco.
 - Es la pareja natural de Wireshark.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md) y [CyberSOC](../../cybersoc/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md) y [CyberSOC](../../cybersoc/README.md).
 
 **Fuentes:** [tcpdump — Manual](https://www.tcpdump.org/manpages/tcpdump.1.html) · [pcap-filter — Man page](https://www.tcpdump.org/manpages/pcap-filter.7.html) · [NIST SP 800-86](https://csrc.nist.gov/pubs/sp/800/86/final)
 
@@ -367,7 +367,7 @@ Una captura de paquetes (*pcap*) conserva el tráfico para analizarlo después. 
 - La captura debe documentar interfaz y ventana temporal.
 - Puede contener datos personales: tratarla con cuidado.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [Wireshark — pcap](https://www.wireshark.org/docs/) · [tcpdump — Man page](https://www.tcpdump.org/manpages/tcpdump.1.html) · [NIST SP 800-86](https://csrc.nist.gov/pubs/sp/800/86/final)
 

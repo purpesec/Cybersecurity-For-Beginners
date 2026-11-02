@@ -57,7 +57,7 @@ El hardware es la parte física del sistema: CPU, memoria RAM, almacenamiento, p
 - Firmware/UEFI: inicializa el hardware y arranca el sistema; es una superficie de ataque real.
 - Periféricos y buses (PCIe, USB) amplían la superficie: todo lo conectado es un vector potencial.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/01-preparacion-del-entorno/README.md) dimensiona RAM y disco según estos componentes.
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md) dimensiona RAM y disco según estos componentes.
 
 **Fuentes:** [Microsoft Learn — Windows hardware dev](https://learn.microsoft.com/en-us/windows-hardware/) · [Intel — Developer documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) · [Linux kernel — Documentation](https://www.kernel.org/doc/html/latest/)
 
@@ -89,7 +89,7 @@ Instalar software es incorporar programas al sistema y dejarlos disponibles para
 - Las instalaciones silenciosas son habituales en despliegues y también en malware.
 - Registrar qué se instaló, desde dónde y con qué permisos facilita el mantenimiento y la respuesta a incidentes.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md) instala FLARE-VM y herramientas de análisis.
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md) instala FLARE-VM y herramientas de análisis.
 
 **Fuentes:** [Debian — APT](https://www.debian.org/doc/manuals/apt-guide/) · [Microsoft Learn — Windows Installer](https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-portal) · [Red Hat — DNF](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/)
 
@@ -253,7 +253,7 @@ Instalar un sistema operativo implica preparar el disco, el arranque, los contro
 - Documentar la configuración permite reproducirla y compararla.
 - En laboratorio, partir de una instantánea limpia ahorra horas de reinstalación.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md) y [Laboratorio](../../setup/README.md) describen este proceso.
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md) y [Laboratorio](../../setup/README.md) describen este proceso.
 
 **Fuentes:** [Microsoft Learn — Windows deployment](https://learn.microsoft.com/en-us/windows/deployment/) · [Ubuntu — Server installation](https://documentation.ubuntu.com/server/) · [Red Hat — Installation guide](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/performing_a_standard_rhel_9_installation/)
 

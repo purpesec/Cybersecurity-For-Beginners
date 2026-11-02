@@ -58,7 +58,7 @@ Un protocolo define el formato, el orden y las reglas de los mensajes. Los más 
 - Muchos protocolos antiguos viajan en claro y exponen credenciales.
 - Conocer el protocolo permite leer una captura sin adivinar.
 
-**En el curso:** base para [CyberSOC](../../cybersoc/README.md) y para el análisis de tráfico de [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** base para [CyberSOC](../../cybersoc/README.md) y para el análisis de tráfico de [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [IANA — Protocol registries](https://www.iana.org/protocols) · [RFC 1122](https://www.rfc-editor.org/rfc/rfc1122) · [Cloudflare — Network protocols](https://www.iana.org/protocols)
 
@@ -74,7 +74,7 @@ Un *handshake* es el intercambio inicial que acuerda parámetros antes de transm
 - Un saludo incompleto o repetido puede indicar escaneo o denegación de servicio.
 - Los identificadores de sesión permiten seguir una conversación en la captura.
 
-**En el curso:** se observa en [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** se observa en [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [RFC 9293 — TCP](https://www.rfc-editor.org/rfc/rfc9293) · [RFC 8446 — TLS 1.3](https://www.rfc-editor.org/rfc/rfc8446) · [Cloudflare — TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)
 
@@ -90,7 +90,7 @@ DNS traduce nombres a direcciones y publica otros registros (MX, TXT, CNAME). Es
 - UDP/53 para consultas y TCP/53 para respuestas grandes o transferencias de zona.
 - Es un canal habitual de *command and control* y de exfiltración.
 
-**En el curso:** [Ethical Hacking](../../ethical-hacking/03-reconocimiento-y-osint-tecnico/README.md) y análisis de C2 en [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [Ethical Hacking](../../ethical-hacking/03-reconocimiento-y-osint-tecnico/README.md) y análisis de C2 en [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [RFC 1034](https://www.rfc-editor.org/rfc/rfc1034) · [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035) · [IANA — DNS parameters](https://www.iana.org/assignments/dns-parameters/)
 

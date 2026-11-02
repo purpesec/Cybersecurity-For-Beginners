@@ -91,7 +91,7 @@ El envenenamiento DNS introduce respuestas falsas en la caché de un resolver pa
 - DNS over HTTPS/TLS protege la confidencialidad, no la autenticidad.
 - Revisar resolvers y cachés es parte de la respuesta.
 
-**En el curso:** [CyberSOC](../../cybersoc/README.md) y [Análisis de malware](../../malware-analysis/05-enfoques-de-analisis/README.md).
+**En el curso:** [CyberSOC](../../cybersoc/README.md) y [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [RFC 4033 — DNSSEC](https://www.rfc-editor.org/rfc/rfc4033) · [NIST SP 800-81-2](https://www.nist.gov/publications/secure-domain-name-system-dns-deployment-guide) · [MITRE ATT&CK — DNS](https://attack.mitre.org/techniques/T1071/004/)
 
@@ -261,7 +261,7 @@ El desbordamiento de búfer escribe más datos de los que caben en una región d
 - Su explotación requiere conocer la arquitectura y el binario.
 - En análisis de malware explica muchas vulnerabilidades de memoria.
 
-**En el curso:** [Análisis de malware](../../malware-analysis/04-arquitectura-x86-y-memoria/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [MITRE CWE-121](https://cwe.mitre.org/data/definitions/121.html) · [OWASP — Buffer Overflow](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow) · [NIST SP 800-123](https://csrc.nist.gov/pubs/sp/800/123/final)
 

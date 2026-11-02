@@ -101,7 +101,7 @@ El aislamiento separa recursos para limitar el impacto de un fallo o un ataque: 
 - Los canales laterales pueden atravesar aislamientos teóricos.
 - En laboratorio, el aislamiento de red es obligatorio.
 
-**En el curso:** [Preparación del entorno](../../malware-analysis/01-preparacion-del-entorno/README.md).
+**En el curso:** [Preparación del entorno](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST SP 800-125](https://csrc.nist.gov/pubs/sp/800/125/final) · [NIST SP 800-190](https://csrc.nist.gov/pubs/sp/800/190/final) · [CISA — Segmentation](https://www.cisa.gov/topics/cybersecurity-best-practices)
 
@@ -229,7 +229,7 @@ Una función hash transforma datos en una huella de longitud fija. Es determinis
 - Un hash verifica integridad, no identidad.
 - Los hashes de contraseñas necesitan sal y un algoritmo lento (bcrypt, Argon2).
 
-**En el curso:** [Análisis de malware](../../malware-analysis/02-fundamentos-del-malware/README.md).
+**En el curso:** [Análisis de malware](../../malware-analysis/README.md).
 
 **Fuentes:** [NIST FIPS 180-4](https://csrc.nist.gov/pubs/fips/180-4/upd1/final) · [NIST SP 800-107 Rev. 1](https://csrc.nist.gov/pubs/sp/800/107/r1/final) · [OWASP — Password storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 
