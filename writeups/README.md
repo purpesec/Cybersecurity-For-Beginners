@@ -6,8 +6,8 @@ Resoluciones paso a paso de máquinas y retos de plataformas de práctica.
 
 | Máquina | Plataforma | Sistema | Dificultad | Writeup |
 | --- | --- | --- | --- | --- |
-| Meow | Hack The Box (Starting Point) | Linux | Starting Point | [Ver resolución](https://purpesec.github.io/blog/posts/meow-hackthebox/) |
-| Fawn | Hack The Box (Starting Point, Tier 0) | Linux | Starting Point | [Ver resolución](https://purpesec.github.io/blog/posts/fawn-hackthebox/) |
+| Meow | Hack The Box | Linux | Starting Point | [Ver resolución](https://purpesec.github.io/blog/posts/meow-hackthebox/) |
+| Fawn | Hack The Box | Linux | Starting Point | [Ver resolución](https://purpesec.github.io/blog/posts/fawn-hackthebox/) |
 
 
 [Volver al catálogo](../README.md)
