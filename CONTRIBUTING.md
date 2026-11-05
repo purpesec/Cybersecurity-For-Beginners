@@ -10,9 +10,10 @@ Las contribuciones deben mantener el contenido reproducible, neutral y seguro pa
 
 ## Convenciones de estructura
 
-- Cada ruta utiliza una carpeta de primer nivel y un `README.md` como índice.
-- Cada sesión utiliza `<curso>/NN-tema/README.md`.
-- Cada laboratorio utiliza `<curso>/NN-tema/lab/README.md`.
+- El repositorio se organiza en cuatro áreas de primer nivel, las mismas del blog: `fundamentos/`, `red-team-operations/`, `blue-team-operations/` y `analisis-de-malware/`.
+- Cada área contiene una o más rutas; cada ruta usa su propia carpeta con un `README.md` como índice.
+- Cada sesión utiliza `<ruta>/NN-tema/README.md`.
+- Cada laboratorio utiliza `<ruta>/NN-tema/lab/README.md`.
 - Los archivos de apoyo permanecen dentro del `lab/` que los necesita.
 - Los nombres de carpetas se escriben en minúsculas y con guiones, por ejemplo `02-fundamentos-sql`.
 - Se conserva la numeración real de las sesiones aunque todavía existan huecos.
