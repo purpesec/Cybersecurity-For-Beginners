@@ -10,8 +10,8 @@ Las contribuciones deben mantener el contenido reproducible, neutral y seguro pa
 
 ## Convenciones de estructura
 
-- El repositorio se organiza en las cuatro áreas de primer nivel del blog: `fundamentos/`, `red-team-operations/`, `blue-team-operations/` y `analisis-de-malware/`.
-- Cada área contiene únicamente un `README.md` con la lista de temas.
+- El repositorio se organiza en las cuatro áreas de aprendizaje del blog (`fundamentos/`, `red-team-operations/`, `blue-team-operations/` y `analisis-de-malware/`) y en las categorías transversales `writeups/`, `certificaciones/`, `laboratorios/`, `resenas/` y `guias/`.
+- Cada área o categoría contiene únicamente un `README.md` con la lista de temas.
 - No se crean carpetas de rutas, cursos ni sesiones. El material práctico vive en su repositorio correspondiente.
 - Cada tema es una fila de la tabla del área y enlaza directamente al post del blog.
 - Los nombres de carpetas se escriben en minúsculas y con guiones.
