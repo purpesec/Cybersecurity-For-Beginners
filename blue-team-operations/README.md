@@ -1,18 +1,11 @@
 # Blue Team Operations
 
-Ruta defensiva para comprender datos y riesgo, amenazas, defensa en profundidad, operación de un SOC, Threat Intelligence y Threat Hunting con Wazuh y Suricata.
+Temas defensivos: monitorización, detección, SIEM y respuesta.
 
-> [!CAUTION]
-> Practica solo en redes host-only y sistemas propios o expresamente autorizados. DVWA, Indexer y puertos de gestión no deben exponerse a Internet.
+## Temas
 
-## Rutas
-
-| Ruta | Contenido |
+| Tema | Contenido |
 |---|---|
-| [CyberSOC](./cybersoc/README.md) | Fundamentos de SOC, SIEM y Wazuh, arquitectura del laboratorio, Threat Intelligence y Threat Hunting |
+| [Introducción a Wazuh](https://purpesec.github.io/blog/posts/introduccion-wazuh/) | Arquitectura del servidor, agentes Windows y Linux, logs, dashboard, reglas personalizadas y detección de ataques. |
 
-Antes de empezar: [Fundamentos](../fundamentos/README.md) y [preparación del laboratorio](../setup/README.md).
-
-La teoría de esta área está en el blog: [Blue Team Operations](https://purpesec.github.io/blog/categories/blue-team-operations/).
-
-[Volver al catálogo principal](../README.md)
+[Volver al catálogo](../README.md)

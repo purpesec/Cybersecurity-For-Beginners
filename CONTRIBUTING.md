@@ -10,27 +10,21 @@ Las contribuciones deben mantener el contenido reproducible, neutral y seguro pa
 
 ## Convenciones de estructura
 
-- El repositorio se organiza en cuatro áreas de primer nivel, las mismas del blog: `fundamentos/`, `red-team-operations/`, `blue-team-operations/` y `analisis-de-malware/`.
-- Cada área contiene una o más rutas; cada ruta usa su propia carpeta con un `README.md` como índice.
-- Cada sesión utiliza `<ruta>/NN-tema/README.md`.
-- Cada laboratorio utiliza `<ruta>/NN-tema/lab/README.md`.
-- Los archivos de apoyo permanecen dentro del `lab/` que los necesita.
-- Los nombres de carpetas se escriben en minúsculas y con guiones, por ejemplo `02-fundamentos-sql`.
-- Se conserva la numeración real de las sesiones aunque todavía existan huecos.
+- El repositorio se organiza en las cuatro áreas de primer nivel del blog: `fundamentos/`, `red-team-operations/`, `blue-team-operations/` y `analisis-de-malware/`.
+- Cada área contiene únicamente un `README.md` con la lista de temas.
+- No se crean carpetas de rutas, cursos ni sesiones. El material práctico vive en su repositorio correspondiente.
+- Cada tema es una fila de la tabla del área y enlaza directamente al post del blog.
+- Los nombres de carpetas se escriben en minúsculas y con guiones.
 
-## Contenido de una sesión
+## Contenido de un tema
 
-El `README.md` de una sesión debe incluir: objetivo, duración estimada, nivel, prerrequisitos, resultados de aprendizaje, conceptos, laboratorio, evidencias y criterios de finalización.
-
-El `README.md` de un laboratorio debe incluir: alcance autorizado, requisitos, topología cuando aplique, pasos reproducibles, resultados esperados, validación final, entrega y navegación de retorno.
+Cada fila incluye el título del post enlazado con su URL pública y una descripción breve del contenido. El orden de los temas sigue una progresión de aprendizaje, de lo básico a lo específico.
 
 ## Estilo
 
 - El idioma principal es español.
 - Los nombres de productos, comandos y términos técnicos pueden mantenerse en inglés.
 - Usa un solo encabezado H1 por documento.
-- No dupliques código que ya exista como archivo de apoyo; enlázalo desde el laboratorio.
-- Incluye versiones cuando un procedimiento dependa de ellas.
 - Evita referencias a academias o instituciones concretas.
 
 ## Seguridad

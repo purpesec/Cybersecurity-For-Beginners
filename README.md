@@ -1,19 +1,14 @@
 # Ciberseguridad
 
-Material práctico de ciberseguridad organizado en las mismas cuatro áreas que el blog.
+Índice de temas de ciberseguridad para principiantes, organizado en las mismas áreas que el blog. Cada tema enlaza directamente al post correspondiente.
 
-## Catálogo
+## Áreas
 
-| Área | Rutas |
-|---|---|
-| [Fundamentos](./fundamentos/) | Requisitos previos: IT, redes, sistemas operativos, seguridad y herramientas |
-| [Red Team Operations](./red-team-operations/) | Ethical Hacking, Pentesting Web y Escalada de privilegios |
-| [Blue Team Operations](./blue-team-operations/) | CyberSOC: SOC, SIEM, Wazuh, Threat Intelligence y Threat Hunting |
-| [Análisis de malware](./analisis-de-malware/) | Laboratorio, fundamentos, análisis estático y dinámico e ingeniería inversa |
+| Área | Temas |
+|---|---:|
+| [Fundamentos](./fundamentos/) | 2 |
+| [Red Team Operations](./red-team-operations/) | 1 |
+| [Blue Team Operations](./blue-team-operations/) | 1 |
+| [Análisis de malware](./analisis-de-malware/) | 3 |
 
-## Laboratorio y recursos
-
-- [Preparar el laboratorio](./setup/)
-- [Recursos compartidos](./resources/)
-
-La teoría se encuentra [aquí](https://purpesec.github.io/blog/).
+Blog: <https://purpesec.github.io/blog/>

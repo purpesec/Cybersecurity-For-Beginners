@@ -1,20 +1,11 @@
 # Red Team Operations
 
-Rutas ofensivas para comprender la metodología de una evaluación de seguridad, desde el reconocimiento y la enumeración hasta la validación controlada de hallazgos y la escalada de privilegios.
+Temas ofensivos: reconocimiento, enumeración, explotación controlada y escalada de privilegios en entornos autorizados.
 
-> [!CAUTION]
-> Todo el material se practica exclusivamente contra máquinas virtuales aisladas o sistemas para los que exista autorización expresa por escrito.
+## Temas
 
-## Rutas
-
-| Ruta | Contenido |
+| Tema | Contenido |
 |---|---|
-| [Ethical Hacking](./ethical-hacking/README.md) | Metodología, ética, OSINT, reconocimiento, enumeración y explotación controlada |
-| [Pentesting Web](./pentesting-web/README.md) | HTTP, inyecciones SQL, XSS, LFI/RFI, inyección de comandos y fuzzing |
-| [Escalada de privilegios](./privilege-escalation/README.md) | Enumeración local, `sudo`, SUID/SGID, capabilities y tareas programadas |
+| [Enumeración local para escalada de privilegios en Linux y Windows](https://purpesec.github.io/blog/posts/enumeracion-local-escalada-privilegios/) | Usuarios, permisos, servicios y credenciales para identificar rutas de escalada. |
 
-Antes de empezar: [Fundamentos](../fundamentos/README.md) y [preparación del laboratorio](../setup/README.md).
-
-La teoría de esta área está en el blog: [Red Team Operations](https://purpesec.github.io/blog/categories/red-team-operations/).
-
-[Volver al catálogo principal](../README.md)
+[Volver al catálogo](../README.md)
