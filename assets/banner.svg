@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="440" viewBox="0 0 1600 440" role="img" aria-labelledby="title desc">
+  <title id="title">Duelo rojo y azul</title>
+  <desc id="desc">Ilustración de dos misiles de dibujo enfrentados: uno rojo asciende desde la izquierda y otro azul desciende desde la derecha. Sus estelas enmarcan un destello central sobre un fondo oscuro. Sin texto visible.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="0.2"><stop stop-color="#211320"/><stop offset="0.5" stop-color="#111421"/><stop offset="1" stop-color="#102338"/></linearGradient>
+    <radialGradient id="redGlow"><stop stop-color="#f46a86" stop-opacity="0.18"/><stop offset="1" stop-color="#f46a86" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blueGlow"><stop stop-color="#56b9f8" stop-opacity="0.2"/><stop offset="1" stop-color="#56b9f8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="redTrail"><stop stop-color="#f27691" stop-opacity="0"/><stop offset="1" stop-color="#f27691" stop-opacity="0.55"/></linearGradient>
+    <linearGradient id="blueTrail"><stop stop-color="#71ccff" stop-opacity="0"/><stop offset="1" stop-color="#71ccff" stop-opacity="0.55"/></linearGradient>
+    <pattern id="stars" width="160" height="140" patternUnits="userSpaceOnUse"><circle cx="22" cy="33" r="1" fill="#c2c6e3" opacity="0.22"/><circle cx="122" cy="103" r="1.5" fill="#c2c6e3" opacity="0.13"/></pattern>
+  </defs>
+  <rect width="1600" height="440" fill="url(#background)"/>
+  <rect width="1600" height="440" fill="url(#stars)"/>
+  <ellipse cx="550" cy="255" rx="390" ry="260" fill="url(#redGlow)"/>
+  <ellipse cx="1050" cy="185" rx="390" ry="260" fill="url(#blueGlow)"/>
+  <g fill="none" stroke="#b1bad6" stroke-opacity="0.06">
+    <ellipse cx="800" cy="220" rx="680" ry="155"/>
+    <ellipse cx="800" cy="220" rx="520" ry="205"/>
+    <circle cx="800" cy="220" r="150"/>
+  </g>
+  <g transform="translate(525 280) rotate(-18)">
+    <g fill="none" stroke-linecap="round">
+      <path d="M-560 40Q-380 70-115 0" stroke="url(#redTrail)" stroke-width="38"/>
+      <path d="M-560 40Q-380 70-115 0" stroke="url(#redTrail)" stroke-width="12"/>
+      <path d="M-340 72L-210 45M-390 15L-275-1M-190 70L-115 47" stroke="#f47a92" stroke-opacity="0.35" stroke-width="3"/>
+    </g>
+    <path d="M-102-20Q-168-44-216 0Q-166 44-102 20Z" fill="#ed607b" stroke="#191725" stroke-width="4"/>
+    <path d="M-100-12Q-145-23-179 0Q-141 23-100 12Z" fill="#ffbc85"/>
+    <path d="M-100-5L-148 0L-100 5Z" fill="#fff1cc"/>
+    <path d="M-83-24L-119-65L-55-49L-14-23M-83 24L-119 65L-55 49L-14 23" fill="#db526e" stroke="#191725" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-100-24L65-30Q113-27 150 0Q113 27 65 30L-100 24Z" fill="#ef8599" stroke="#191725" stroke-width="4"/>
+    <path d="M-83-19L65-24Q100-22 124-9L-83-9Z" fill="#ffc1cb" opacity="0.65"/>
+    <path d="M76-29Q116-25 150 0Q116 25 76 29Z" fill="#e45172" stroke="#191725" stroke-width="4"/>
+    <path d="M-100-24L-79-25L-79 25L-100 24Z" fill="#5b3c55" stroke="#191725" stroke-width="4"/>
+    <path d="M-30-27V27" stroke="#a94e69" stroke-width="3"/>
+    <circle cx="28" cy="0" r="15" fill="#30283e" stroke="#ffd1d8" stroke-width="3"/>
+    <circle cx="32" cy="-4" r="5" fill="#f6aab9" opacity="0.8"/>
+    <path d="M-72 0H-14L-44 10L-91 8Z" fill="#d35472" stroke="#191725" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(1075 160) rotate(162)">
+    <g fill="none" stroke-linecap="round">
+      <path d="M-560 40Q-380 70-115 0" stroke="url(#blueTrail)" stroke-width="38"/>
+      <path d="M-560 40Q-380 70-115 0" stroke="url(#blueTrail)" stroke-width="12"/>
+      <path d="M-340 72L-210 45M-390 15L-275-1M-190 70L-115 47" stroke="#76ccff" stroke-opacity="0.35" stroke-width="3"/>
+    </g>
+    <path d="M-102-20Q-168-44-216 0Q-166 44-102 20Z" fill="#449ff1" stroke="#101c2e" stroke-width="4"/>
+    <path d="M-100-12Q-145-23-179 0Q-141 23-100 12Z" fill="#92e4ff"/>
+    <path d="M-100-5L-148 0L-100 5Z" fill="#e5fbff"/>
+    <path d="M-83-24L-119-65L-55-49L-14-23M-83 24L-119 65L-55 49L-14 23" fill="#398fc9" stroke="#101c2e" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M-100-24L65-30Q113-27 150 0Q113 27 65 30L-100 24Z" fill="#7fc5ee" stroke="#101c2e" stroke-width="4"/>
+    <path d="M-83 19L65 24Q100 22 124 9L-83 9Z" fill="#d0efff" opacity="0.65"/>
+    <path d="M76-29Q116-25 150 0Q116 25 76 29Z" fill="#3998d7" stroke="#101c2e" stroke-width="4"/>
+    <path d="M-100-24L-79-25L-79 25L-100 24Z" fill="#304c70" stroke="#101c2e" stroke-width="4"/>
+    <path d="M-30-27V27" stroke="#428bb9" stroke-width="3"/>
+    <circle cx="28" cy="0" r="15" fill="#18354e" stroke="#d5f2ff" stroke-width="3"/>
+    <circle cx="32" cy="4" r="5" fill="#9bdefa" opacity="0.8"/>
+    <path d="M-72 0H-14L-44-10L-91-8Z" fill="#3b95cf" stroke="#101c2e" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(800 220)" fill="none" stroke-linecap="round">
+    <path d="M-26-24L-14-11M22-30L14-14M32 18L17 11M-27 24L-15 14" stroke="#b8b5dc" stroke-opacity="0.55" stroke-width="2"/>
+    <path d="M0-18L4-4L18 0L4 4L0 18L-4 4L-18 0L-4-4Z" fill="#e0dcf4" stroke="#e0dcf4" stroke-width="1.5"/>
+    <circle r="45" stroke="#b7b0d6" stroke-opacity="0.12" stroke-dasharray="3 9"/>
+  </g>
+  <path d="M0 439H800" stroke="#f07891" stroke-opacity="0.35"/>
+  <path d="M800 439H1600" stroke="#72c9fa" stroke-opacity="0.35"/>
+</svg>

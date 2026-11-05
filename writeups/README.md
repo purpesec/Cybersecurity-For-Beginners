@@ -2,10 +2,12 @@
 
 Resoluciones paso a paso de máquinas y retos de plataformas de práctica.
 
-## Temas
+## Máquinas resueltas
 
-| Tema | Contenido |
-|---|---|
-| [Meow HTB: Writeup](https://purpesec.github.io/blog/posts/meow-hackthebox/) | Meow de Hack The Box Starting Point: enumeración con Nmap, conexión por Telnet y acceso como root sin contraseña. |
+| Máquina | Plataforma | Sistema | Dificultad | Writeup |
+| --- | --- | --- | --- | --- |
+| Meow | Hack The Box (Starting Point) | Linux | No indicada | [Ver resolución](https://purpesec.github.io/blog/posts/meow-hackthebox/) |
+
+La dificultad se recoge cuando está confirmada en el artículo o en la plataforma.
 
 [Volver al catálogo](../README.md)
