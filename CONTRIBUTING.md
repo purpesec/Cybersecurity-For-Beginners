@@ -27,6 +27,16 @@ Cada fila incluye el título del post enlazado con su URL pública y una descrip
 - Usa un solo encabezado H1 por documento.
 - Evita referencias a academias o instituciones concretas.
 
+## Comprobación de índices
+
+`scripts/check-index.js` compara los índices con los posts del blog:
+
+```sh
+node scripts/check-index.js ../blog/_posts
+```
+
+Avisa de los temas publicados que no aparecen en su área, de las categorías no reconocidas y de los enlaces a posts que ya no existen. El workflow `.github/workflows/check-index.yml` lo ejecuta los lunes, al cambiar un README o manualmente. Como el blog es privado, necesita el secreto `BLOG_REPO_TOKEN` con permiso de lectura sobre `purpesec/blog`.
+
 ## Seguridad
 
 - No incluyas malware real, credenciales válidas, datos personales ni secretos.

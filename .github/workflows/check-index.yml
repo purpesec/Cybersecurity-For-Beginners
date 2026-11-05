@@ -1,0 +1,40 @@
+name: Check blog index
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+  repository_dispatch:
+    types: [blog-published]
+  push:
+    paths:
+      - "**/README.md"
+      - "scripts/**"
+      - ".github/workflows/check-index.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del índice
+        uses: actions/checkout@v4
+
+      # El blog es privado: requiere un token con acceso de lectura a purpesec/blog
+      # guardado como el secreto BLOG_REPO_TOKEN.
+      - name: Checkout del blog
+        uses: actions/checkout@v4
+        with:
+          repository: purpesec/blog
+          token: ${{ secrets.BLOG_REPO_TOKEN }}
+          path: blog
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Comprobar índices
+        run: node scripts/check-index.js blog/_posts
