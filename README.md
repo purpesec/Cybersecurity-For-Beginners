@@ -36,4 +36,5 @@ writeups que muestran cómo aplicar los conceptos al resolver máquinas de prác
    3. [Windows Internals para análisis de malware](https://purpesec.github.io/blog/posts/windows-internals-analisis-malware/)
 7. [Writeups](./writeups/)
    1. [Meow HTB: Writeup](https://purpesec.github.io/blog/posts/meow-hackthebox/)
+   2. [Fawn HTB: Writeup](https://purpesec.github.io/blog/posts/fawn-hackthebox/)
 8. [Guías](./guias/)
