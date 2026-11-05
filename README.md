@@ -18,8 +18,6 @@ Los temas incluyen enumeración para escalada de privilegios, monitorización co
 Wazuh y preparación de un laboratorio de análisis con FLARE-VM. También hay
 writeups que muestran cómo aplicar los conceptos al resolver máquinas de práctica.
 
-Cada tema enlaza al artículo completo en el blog. Las carpetas agrupan las
-publicaciones por área y el índice permite seguirlas en orden.
 
 ## Tabla de contenido
 

@@ -11,14 +11,15 @@ Las contribuciones deben mantener el contenido reproducible, neutral y seguro pa
 ## Convenciones de estructura
 
 - El repositorio se organiza en las cuatro áreas de aprendizaje del blog (`fundamentos/`, `red-team-operations/`, `blue-team-operations/` y `analisis-de-malware/`) y en las categorías transversales `writeups/`, `certificaciones/`, `laboratorios/`, `resenas/` y `guias/`.
-- Cada área o categoría contiene únicamente un `README.md` con la lista de temas.
-- No se crean carpetas de rutas, cursos ni sesiones. El material práctico vive en su repositorio correspondiente.
-- Cada tema es una fila de la tabla del área y enlaza directamente al post del blog.
+- Cada área contiene un `README.md` con una tabla de dos columnas: Tema y Labs.
+- Los laboratorios viven en `labs/<nombre-del-lab>/` dentro del área correspondiente. Cada laboratorio incluye un `README.md` con las instrucciones y sus archivos de práctica.
+- La columna Tema enlaza al post del blog. La columna Labs enlaza a la carpeta del laboratorio en GitHub mediante una ruta relativa; si no existe laboratorio para ese tema, muestra `-`.
+- No se crean carpetas de rutas, cursos ni sesiones.
 - Los nombres de carpetas se escriben en minúsculas y con guiones.
 
 ## Contenido de un tema
 
-Cada fila incluye el título del post enlazado con su URL pública y una descripción breve del contenido. El orden de los temas sigue una progresión de aprendizaje, de lo básico a lo específico.
+Cada fila incluye el título numerado del post enlazado con su URL pública y, en la columna Labs, el enlace al laboratorio de GitHub o `-`. No se enlaza un laboratorio hasta que sus instrucciones y archivos estén disponibles. El orden de los temas sigue una progresión de aprendizaje, de lo básico a lo específico. La tabla de writeups conserva sus columnas de máquina, plataforma, sistema, dificultad y resolución.
 
 ## Estilo
 
