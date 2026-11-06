@@ -22,19 +22,12 @@ jobs:
       - name: Checkout del índice
         uses: actions/checkout@v4
 
-      # El blog es privado: requiere un token con acceso de lectura a purpesec/blog
-      # guardado como el secreto BLOG_REPO_TOKEN.
-      - name: Checkout del blog
-        uses: actions/checkout@v4
-        with:
-          repository: purpesec/blog
-          token: ${{ secrets.BLOG_REPO_TOKEN }}
-          path: blog
-
       - name: Configurar Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
+      # El blog publica su índice de entradas de forma pública, así que la
+      # comprobación no necesita tokens ni clonar el repositorio privado.
       - name: Comprobar índices
-        run: node .github/scripts/check-index.js blog/_posts
+        run: node .github/scripts/check-index.js https://purpesec.github.io/blog/assets/js/data/search.json

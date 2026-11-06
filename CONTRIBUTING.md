@@ -4,9 +4,9 @@ Las contribuciones deben mantener el contenido reproducible, neutral y seguro pa
 
 ## Flujo de trabajo
 
-1. Crea una rama con un nombre descriptivo, por ejemplo `contenido/enumeracion-smb`.
-2. Realiza un cambio acotado y comprueba todos los enlaces relativos.
-3. Abre un pull request que explique el objetivo, el entorno probado y la validación realizada.
+1. Se crea una rama con un nombre descriptivo, por ejemplo `contenido/enumeracion-smb`.
+2. Se realiza un cambio acotado y se comprueban todos los enlaces relativos.
+3. Se abre un pull request que explique el objetivo, el entorno probado y la validación realizada.
 
 ## Convenciones de estructura
 
@@ -25,22 +25,34 @@ Cada fila incluye el título numerado del post enlazado con su URL pública y, e
 
 - El idioma principal es español.
 - Los nombres de productos, comandos y términos técnicos pueden mantenerse en inglés.
-- Usa un solo encabezado H1 por documento.
-- Evita referencias a academias o instituciones concretas.
+- Se usa un solo encabezado H1 por documento.
+- Se evitan las referencias a academias o instituciones concretas.
 
 ## Comprobación de índices
 
-`.github/scripts/check-index.js` compara los índices con los posts del blog:
+`.github/scripts/check-index.js` compara los índices con los posts publicados del blog:
+
+```sh
+node .github/scripts/check-index.js
+```
+
+Por defecto lee el índice público del blog
+(<https://purpesec.github.io/blog/assets/js/data/search.json>), así que no
+necesita credenciales. Para trabajar sin conexión o con borradores todavía sin
+publicar, se le pasa el directorio local de posts:
 
 ```sh
 node .github/scripts/check-index.js ../blog/_posts
 ```
 
-Avisa de los temas publicados que no aparecen en su área, de las categorías no reconocidas y de los enlaces a posts que ya no existen. El workflow `.github/workflows/check-index.yml` lo ejecuta los lunes, al cambiar un README o manualmente. Como el blog es privado, necesita el secreto `BLOG_REPO_TOKEN` con permiso de lectura sobre `purpesec/blog`.
+Avisa de los temas publicados que no aparecen en el catálogo raíz o en su área,
+de las categorías no reconocidas y de los enlaces a posts que ya no existen. El
+workflow `.github/workflows/check-index.yml` lo ejecuta los lunes, al cambiar un
+README o manualmente.
 
 ## Seguridad
 
-- No incluyas malware real, credenciales válidas, datos personales ni secretos.
+- No se incluye malware real, credenciales válidas, datos personales ni secretos.
 - Las muestras deben ser simulaciones educativas claramente identificadas.
-- Todo código vulnerable debe incluir un aviso de uso exclusivo en laboratorio.
-- No reemplaces una vulnerabilidad intencional por código seguro sin revisar primero el objetivo didáctico.
+- Todo código vulnerable incluye un aviso de uso exclusivo en laboratorio.
+- No se reemplaza una vulnerabilidad intencional por código seguro sin revisar antes el objetivo didáctico.
