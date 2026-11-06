@@ -35,6 +35,6 @@ writeups que muestran cómo aplicar los conceptos al resolver máquinas de prác
    2. [Montar un laboratorio de análisis de malware con FLARE-VM](https://purpesec.github.io/blog/posts/instalar-flare-vm-laboratorio-malware/)
    3. [Windows Internals para análisis de malware](https://purpesec.github.io/blog/posts/windows-internals-analisis-malware/)
 7. [Writeups](./writeups/)
-   1. [Meow HTB: Writeup](https://purpesec.github.io/blog/posts/meow-hackthebox/)
-   2. [Fawn HTB: Writeup](https://purpesec.github.io/blog/posts/fawn-hackthebox/)
+   1. [Meow | Hack The Box](https://purpesec.github.io/blog/posts/meow-hackthebox/)
+   2. [Fawn | Hack The Box](https://purpesec.github.io/blog/posts/fawn-hackthebox/)
 8. [Guías](./guias/)
