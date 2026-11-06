@@ -12,10 +12,7 @@ const CATEGORY_TO_DIR = {
   "blue team operations": "blue-team-operations",
   "analisis de malware": "analisis-de-malware",
   writeups: "writeups",
-  certificaciones: "certificaciones",
-  laboratorios: "laboratorios",
-  resenas: "resenas",
-  guias: "guias",
+  laboratorios: "labs",
 };
 
 const INDEX_DIRS = [
@@ -24,10 +21,7 @@ const INDEX_DIRS = [
   "blue-team-operations",
   "analisis-de-malware",
   "writeups",
-  "certificaciones",
-  "laboratorios",
-  "resenas",
-  "guias",
+  "labs",
 ];
 
 function normalize(value) {

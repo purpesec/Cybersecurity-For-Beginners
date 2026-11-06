@@ -37,4 +37,4 @@ writeups que muestran cómo aplicar los conceptos al resolver máquinas de prác
 7. [Writeups](./writeups/)
    1. [Meow | Hack The Box](https://purpesec.github.io/blog/posts/meow-hackthebox/)
    2. [Fawn | Hack The Box](https://purpesec.github.io/blog/posts/fawn-hackthebox/)
-8. [Guías](./guias/)
+8. [Labs](./labs/)

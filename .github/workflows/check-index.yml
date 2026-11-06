@@ -9,7 +9,7 @@ on:
   push:
     paths:
       - "**/README.md"
-      - "scripts/**"
+      - ".github/scripts/**"
       - ".github/workflows/check-index.yml"
 
 permissions:
@@ -37,4 +37,4 @@ jobs:
           node-version: "20"
 
       - name: Comprobar índices
-        run: node scripts/check-index.js blog/_posts
+        run: node .github/scripts/check-index.js blog/_posts
