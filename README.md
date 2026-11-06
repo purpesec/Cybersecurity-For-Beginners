@@ -10,7 +10,7 @@ Blog: <https://purpesec.github.io/blog/>
 
 ## About
 
-Red2Blue Learning reúne mis publicaciones sobre ciberseguridad en español,
+Red2Blue Learning reúne las publicaciones sobre ciberseguridad en español,
 organizadas para empezar por redes y Linux y continuar con seguridad ofensiva,
 operaciones defensivas o análisis de malware.
 

@@ -1,6 +1,6 @@
 # Red Team Operations
 
-Temas ofensivos: reconocimiento, enumeración, explotación controlada y escalada de privilegios en entornos autorizados.
+Esta sección aborda el reconocimiento, la enumeración, la explotación controlada y la escalada de privilegios en entornos autorizados.
 
 ## Temas y labs
 

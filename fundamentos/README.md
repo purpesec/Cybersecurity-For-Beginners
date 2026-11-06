@@ -1,6 +1,6 @@
 # Fundamentos
 
-Conceptos base que conviene dominar antes de entrar en las áreas ofensiva o defensiva.
+Esta sección reúne los conceptos básicos que sirven de base para las áreas ofensiva y defensiva.
 
 ## Temas y labs
 

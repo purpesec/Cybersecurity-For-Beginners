@@ -1,6 +1,6 @@
 # Writeups
 
-Resoluciones paso a paso de máquinas y retos de plataformas de práctica.
+Esta sección reúne resoluciones paso a paso de máquinas y retos de plataformas de práctica.
 
 ## Máquinas resueltas
 

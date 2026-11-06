@@ -1,6 +1,6 @@
 # Blue Team Operations
 
-Temas defensivos: monitorización, detección, SIEM y respuesta.
+Esta sección aborda la monitorización, la detección, los sistemas SIEM y la respuesta a incidentes.
 
 ## Temas y labs
 
