@@ -2,19 +2,11 @@
 
 Esta sección reúne resoluciones paso a paso de máquinas y retos de plataformas de práctica.
 
-## Máquinas resueltas
-
-| Máquina | Plataforma | Sistema | Dificultad | Writeup |
-| --- | --- | --- | --- | --- |
-| Meow | Hack The Box | Linux | Starting Point | [Ver resolución](https://purpesec.github.io/blog/posts/meow-hackthebox/) |
-| Fawn | Hack The Box | Linux | Starting Point | [Ver resolución](https://purpesec.github.io/blog/posts/fawn-hackthebox/) |
-| Anonymous | TryHackMe | Linux | Easy | [Ver resolución](https://purpesec.github.io/blog/posts/anonymous-tryhackme/) |
-
-## Laboratorios web
-
-| Laboratorio | Plataforma | Dificultad | Writeup |
+| Writeup | Plataforma | Dificultad | Enlace |
 | --- | --- | --- | --- |
-| Unprotected admin functionality | PortSwigger | Apprentice | [Ver resolución](https://purpesec.github.io/blog/posts/unprotected-admin-functionality-portswigger/) |
-
+| [Meow](https://purpesec.github.io/blog/posts/meow-hackthebox/) | Hack The Box | Starting Point | [Ir a la máquina](https://app.hackthebox.com/starting-point) |
+| [Fawn](https://purpesec.github.io/blog/posts/fawn-hackthebox/) | Hack The Box | Starting Point | [Ir a la máquina](https://app.hackthebox.com/starting-point) |
+| [Anonymous](https://purpesec.github.io/blog/posts/anonymous-tryhackme/) | TryHackMe | Easy | [Ir a la máquina](https://tryhackme.com/room/anonymous) |
+| [Unprotected admin functionality](https://purpesec.github.io/blog/posts/unprotected-admin-functionality-portswigger/) | PortSwigger | Apprentice | [Ir al ejercicio](https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality) |
 
 [Volver al catálogo](../README.md)
