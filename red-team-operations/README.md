@@ -7,6 +7,6 @@ Esta sección aborda el reconocimiento, la enumeración, la explotación control
 
 | Tema | Labs |
 | --- | --- |
-| 1. [Enumeración local para escalada de privilegios en Linux y Windows](https://purpesec.github.io/blog/posts/enumeracion-local-escalada-privilegios/) | - |
+| 1. [Enumeración local para escalada de privilegios en Linux y Windows](https://purpesec.github.io/blog/posts/enumeracion-local-escalada-privilegios/) | [Anonymous](https://purpesec.github.io/blog/posts/anonymous-tryhackme/) |
 
 [Volver al catálogo](../README.md)
